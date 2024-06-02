@@ -11,3 +11,5 @@ class TranslatorState extends BaseBlocState with _$TranslatorState {
 
   }) = _TranslatorState;
 }
+
+class NavigateBack extends BlocAction{}

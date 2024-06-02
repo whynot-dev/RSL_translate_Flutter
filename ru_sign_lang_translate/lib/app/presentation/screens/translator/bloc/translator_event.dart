@@ -4,4 +4,6 @@ part of 'translator_bloc.dart';
 class TranslatorEvent with _$TranslatorEvent {
   const factory TranslatorEvent.init() = Init;
   const factory TranslatorEvent.gestureRecognized(String gesture) = GestureRecognized;
+  const factory TranslatorEvent.switchCameraClicked() = SwitchCameraClicked;
+  const factory TranslatorEvent.backClicked() = BackClicked;
 }

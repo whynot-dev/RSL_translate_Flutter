@@ -7,11 +7,13 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
   DefaultAppbar({
     this.title,
     this.subtitle,
-    this.needDivider = true,
+    this.needDivider = false,
     this.onBackPressed,
     this.backButtonColor = AppColors.onAccent,
     this.backgroundColor = AppColors.grayBackground,
-    this.sizeFromHeight = 64,
+    this.sizeFromHeight = 58,
+    this.rightWidget = const SizedBox(),
+    this.onRightWidgetPressed,
   });
 
   final String? title;
@@ -21,13 +23,18 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Color backButtonColor;
   final Color backgroundColor;
   final double sizeFromHeight;
+  final Widget rightWidget;
+  final VoidCallback? onRightWidgetPressed;
 
   @override
   Size get preferredSize => Size.fromHeight(sizeFromHeight);
 
   @override
   Widget build(BuildContext context) => Container(
-        color: backgroundColor,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
+        ),
         height: sizeFromHeight,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -41,6 +48,10 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   Center(
                     child: _buildTitles(),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: rightWidget,
                   ),
                 ],
               ),
@@ -62,7 +73,7 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
         },
         behavior: HitTestBehavior.opaque,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(14),
           child: SvgPicture.asset(
             Assets.images.backArrow,
             height: 32,
@@ -73,7 +84,7 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
       );
 
   Widget _buildTitles() => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 6.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -88,8 +99,7 @@ class DefaultAppbar extends StatelessWidget implements PreferredSizeWidget {
         title!,
         style: TextStyle(
           fontWeight: FontWeight.w700,
-          fontSize: 17,
-          height: 24 / 17,
+          fontSize: 18,
           color: AppColors.onBackground,
         ),
       );

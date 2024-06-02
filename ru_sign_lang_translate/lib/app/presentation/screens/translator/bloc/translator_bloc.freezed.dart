@@ -238,18 +238,24 @@ mixin _$TranslatorEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function(String gesture) gestureRecognized,
+    required TResult Function() switchCameraClicked,
+    required TResult Function() backClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
     TResult? Function(String gesture)? gestureRecognized,
+    TResult? Function()? switchCameraClicked,
+    TResult? Function()? backClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String gesture)? gestureRecognized,
+    TResult Function()? switchCameraClicked,
+    TResult Function()? backClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -257,18 +263,24 @@ mixin _$TranslatorEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
     required TResult Function(GestureRecognized value) gestureRecognized,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(BackClicked value) backClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
     TResult? Function(GestureRecognized value)? gestureRecognized,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(BackClicked value)? backClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
     TResult Function(GestureRecognized value)? gestureRecognized,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(BackClicked value)? backClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -331,6 +343,8 @@ class _$InitImpl implements Init {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function(String gesture) gestureRecognized,
+    required TResult Function() switchCameraClicked,
+    required TResult Function() backClicked,
   }) {
     return init();
   }
@@ -340,6 +354,8 @@ class _$InitImpl implements Init {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
     TResult? Function(String gesture)? gestureRecognized,
+    TResult? Function()? switchCameraClicked,
+    TResult? Function()? backClicked,
   }) {
     return init?.call();
   }
@@ -349,6 +365,8 @@ class _$InitImpl implements Init {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String gesture)? gestureRecognized,
+    TResult Function()? switchCameraClicked,
+    TResult Function()? backClicked,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -362,6 +380,8 @@ class _$InitImpl implements Init {
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
     required TResult Function(GestureRecognized value) gestureRecognized,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(BackClicked value) backClicked,
   }) {
     return init(this);
   }
@@ -371,6 +391,8 @@ class _$InitImpl implements Init {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
     TResult? Function(GestureRecognized value)? gestureRecognized,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(BackClicked value)? backClicked,
   }) {
     return init?.call(this);
   }
@@ -380,6 +402,8 @@ class _$InitImpl implements Init {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
     TResult Function(GestureRecognized value)? gestureRecognized,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(BackClicked value)? backClicked,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -460,6 +484,8 @@ class _$GestureRecognizedImpl implements GestureRecognized {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function(String gesture) gestureRecognized,
+    required TResult Function() switchCameraClicked,
+    required TResult Function() backClicked,
   }) {
     return gestureRecognized(gesture);
   }
@@ -469,6 +495,8 @@ class _$GestureRecognizedImpl implements GestureRecognized {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
     TResult? Function(String gesture)? gestureRecognized,
+    TResult? Function()? switchCameraClicked,
+    TResult? Function()? backClicked,
   }) {
     return gestureRecognized?.call(gesture);
   }
@@ -478,6 +506,8 @@ class _$GestureRecognizedImpl implements GestureRecognized {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(String gesture)? gestureRecognized,
+    TResult Function()? switchCameraClicked,
+    TResult Function()? backClicked,
     required TResult orElse(),
   }) {
     if (gestureRecognized != null) {
@@ -491,6 +521,8 @@ class _$GestureRecognizedImpl implements GestureRecognized {
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
     required TResult Function(GestureRecognized value) gestureRecognized,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(BackClicked value) backClicked,
   }) {
     return gestureRecognized(this);
   }
@@ -500,6 +532,8 @@ class _$GestureRecognizedImpl implements GestureRecognized {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
     TResult? Function(GestureRecognized value)? gestureRecognized,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(BackClicked value)? backClicked,
   }) {
     return gestureRecognized?.call(this);
   }
@@ -509,6 +543,8 @@ class _$GestureRecognizedImpl implements GestureRecognized {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
     TResult Function(GestureRecognized value)? gestureRecognized,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(BackClicked value)? backClicked,
     required TResult orElse(),
   }) {
     if (gestureRecognized != null) {
@@ -526,4 +562,233 @@ abstract class GestureRecognized implements TranslatorEvent {
   @JsonKey(ignore: true)
   _$$GestureRecognizedImplCopyWith<_$GestureRecognizedImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SwitchCameraClickedImplCopyWith<$Res> {
+  factory _$$SwitchCameraClickedImplCopyWith(_$SwitchCameraClickedImpl value,
+          $Res Function(_$SwitchCameraClickedImpl) then) =
+      __$$SwitchCameraClickedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SwitchCameraClickedImplCopyWithImpl<$Res>
+    extends _$TranslatorEventCopyWithImpl<$Res, _$SwitchCameraClickedImpl>
+    implements _$$SwitchCameraClickedImplCopyWith<$Res> {
+  __$$SwitchCameraClickedImplCopyWithImpl(_$SwitchCameraClickedImpl _value,
+      $Res Function(_$SwitchCameraClickedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SwitchCameraClickedImpl implements SwitchCameraClicked {
+  const _$SwitchCameraClickedImpl();
+
+  @override
+  String toString() {
+    return 'TranslatorEvent.switchCameraClicked()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SwitchCameraClickedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(String gesture) gestureRecognized,
+    required TResult Function() switchCameraClicked,
+    required TResult Function() backClicked,
+  }) {
+    return switchCameraClicked();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(String gesture)? gestureRecognized,
+    TResult? Function()? switchCameraClicked,
+    TResult? Function()? backClicked,
+  }) {
+    return switchCameraClicked?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(String gesture)? gestureRecognized,
+    TResult Function()? switchCameraClicked,
+    TResult Function()? backClicked,
+    required TResult orElse(),
+  }) {
+    if (switchCameraClicked != null) {
+      return switchCameraClicked();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(GestureRecognized value) gestureRecognized,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(BackClicked value) backClicked,
+  }) {
+    return switchCameraClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(GestureRecognized value)? gestureRecognized,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(BackClicked value)? backClicked,
+  }) {
+    return switchCameraClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(GestureRecognized value)? gestureRecognized,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(BackClicked value)? backClicked,
+    required TResult orElse(),
+  }) {
+    if (switchCameraClicked != null) {
+      return switchCameraClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SwitchCameraClicked implements TranslatorEvent {
+  const factory SwitchCameraClicked() = _$SwitchCameraClickedImpl;
+}
+
+/// @nodoc
+abstract class _$$BackClickedImplCopyWith<$Res> {
+  factory _$$BackClickedImplCopyWith(
+          _$BackClickedImpl value, $Res Function(_$BackClickedImpl) then) =
+      __$$BackClickedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$BackClickedImplCopyWithImpl<$Res>
+    extends _$TranslatorEventCopyWithImpl<$Res, _$BackClickedImpl>
+    implements _$$BackClickedImplCopyWith<$Res> {
+  __$$BackClickedImplCopyWithImpl(
+      _$BackClickedImpl _value, $Res Function(_$BackClickedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$BackClickedImpl implements BackClicked {
+  const _$BackClickedImpl();
+
+  @override
+  String toString() {
+    return 'TranslatorEvent.backClicked()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$BackClickedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(String gesture) gestureRecognized,
+    required TResult Function() switchCameraClicked,
+    required TResult Function() backClicked,
+  }) {
+    return backClicked();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(String gesture)? gestureRecognized,
+    TResult? Function()? switchCameraClicked,
+    TResult? Function()? backClicked,
+  }) {
+    return backClicked?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(String gesture)? gestureRecognized,
+    TResult Function()? switchCameraClicked,
+    TResult Function()? backClicked,
+    required TResult orElse(),
+  }) {
+    if (backClicked != null) {
+      return backClicked();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(GestureRecognized value) gestureRecognized,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(BackClicked value) backClicked,
+  }) {
+    return backClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(GestureRecognized value)? gestureRecognized,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(BackClicked value)? backClicked,
+  }) {
+    return backClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(GestureRecognized value)? gestureRecognized,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(BackClicked value)? backClicked,
+    required TResult orElse(),
+  }) {
+    if (backClicked != null) {
+      return backClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class BackClicked implements TranslatorEvent {
+  const factory BackClicked() = _$BackClickedImpl;
 }
