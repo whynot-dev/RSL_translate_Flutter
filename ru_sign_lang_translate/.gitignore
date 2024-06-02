@@ -31,6 +31,7 @@ migrate_working_dir/
 .pub/
 /build/
 /assets/models
+/assets/labels
 
 # Symbolication related
 app.*.symbols

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ru_sign_lang_translate/app/navigation/app_navigator.dart';
 import 'package:ru_sign_lang_translate/app/navigation/navigation_action.dart';
+import 'package:ru_sign_lang_translate/app/presentation/screens/main_screen/bloc/main_screen_bloc.dart';
+import 'package:ru_sign_lang_translate/app/presentation/screens/main_screen/main_screen_screen.dart';
 import 'package:ru_sign_lang_translate/app/presentation/screens/translator/bloc/translator_bloc.dart';
 import 'package:ru_sign_lang_translate/app/presentation/screens/translator/translator_screen.dart';
 import 'package:ru_sign_lang_translate/app/resources/app_colors.dart';
@@ -25,13 +27,13 @@ class SplashScreen extends StatelessWidget {
         listenWhen: (previous, current) => previous.action != current.action,
         listener: (context, state) async {
           var action = state.action;
-          if (action is NavigateToTranslator) {
+          if (action is NavigateToMainScreen) {
             Navigator.push(
               context,
               PageRouteWithoutAnimation(
                 builder: (BuildContext context) => BlocProvider(
-                  create: (context) => TranslatorBloc(),
-                  child: TranslatorScreen(),
+                  create: (context) => MainScreenBloc(),
+                  child: MainScreenScreen(),
                 ),
               ),
             );

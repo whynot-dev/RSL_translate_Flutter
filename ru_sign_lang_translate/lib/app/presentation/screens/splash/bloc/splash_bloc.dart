@@ -24,7 +24,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   FutureOr<void> _checkAuthorizationStatus(CheckAuthorizationStatus event, Emitter<SplashState> emit) async {
     emit(state.copyWith(action: null));
-    emit(state.copyWith(action: NavigateToTranslator()));
+    emit(state.copyWith(action: NavigateToMainScreen()));
     // emit(state.copyWith(
     //   action: NavigateAction.navigateToMap(
     //     NavigateType.pushReplacement,

@@ -7,4 +7,4 @@ class SplashState with _$SplashState {
   }) = _SplashState;
 }
 
-class NavigateToTranslator extends BlocAction{}
+class NavigateToMainScreen extends BlocAction{}
