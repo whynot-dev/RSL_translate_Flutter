@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ru_sign_lang_translate/app/presentation/screens/education/bloc/education_bloc.dart';
+import 'package:ru_sign_lang_translate/app/presentation/screens/education/education_screen.dart';
 import 'package:ru_sign_lang_translate/app/presentation/screens/translator/bloc/translator_bloc.dart';
 import 'package:ru_sign_lang_translate/app/presentation/screens/translator/translator_screen.dart';
 import 'package:ru_sign_lang_translate/app/resources/app_colors.dart';
@@ -33,6 +35,17 @@ class MainScreenScreen extends BaseBlocStatelessWidget<MainScreenBloc, MainScree
               ),
             );
           }
+          if (action is NavigateToEducation) {
+            Navigator.push(
+              context,
+              PageRouteWithoutAnimation(
+                builder: (BuildContext context) => BlocProvider(
+                  create: (context) => EducationBloc(),
+                  child: EducationScreen(),
+                ),
+              ),
+            );
+          }
         },
         child: Column(
           children: [
@@ -42,7 +55,7 @@ class MainScreenScreen extends BaseBlocStatelessWidget<MainScreenBloc, MainScree
             const SizedBox(height: 20),
             _buildMicrophoneButton(),
             const SizedBox(height: 20),
-            _buildEducationButton(),
+            _buildEducationButton(context),
           ],
         ),
       );
@@ -61,8 +74,10 @@ class MainScreenScreen extends BaseBlocStatelessWidget<MainScreenBloc, MainScree
         onPressed: () {},
       );
 
-  Widget _buildEducationButton() => AppButton(
+  Widget _buildEducationButton(BuildContext context) => AppButton(
         text: 'Обучение',
-        onPressed: () {},
+        onPressed: () {
+          getBloc(context).add(MainScreenEvent.educationClicked());
+        },
       );
 }

@@ -16,6 +16,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   MainScreenBloc() : super(MainScreenState()) {
     on<Init>(_init);
     on<TranslateClicked>(_translateClicked);
+    on<EducationClicked>(_educationClicked);
   }
 
   FutureOr<void> _init(Init event, Emitter<MainScreenState> emit) {
@@ -25,5 +26,10 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   FutureOr<void> _translateClicked(TranslateClicked event, Emitter<MainScreenState> emit) {
     emit(state.copyWith(action: null));
     emit(state.copyWith(action: NavigateToTranslator()));
+  }
+
+  FutureOr<void> _educationClicked(EducationClicked event, Emitter<MainScreenState> emit) {
+    emit(state.copyWith(action: null));
+    emit(state.copyWith(action: NavigateToEducation()));
   }
 }

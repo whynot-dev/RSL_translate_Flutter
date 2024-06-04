@@ -8,3 +8,5 @@ class MainScreenState extends BaseBlocState with _$MainScreenState {
 }
 
 class NavigateToTranslator extends BlocAction{}
+
+class NavigateToEducation extends BlocAction{}

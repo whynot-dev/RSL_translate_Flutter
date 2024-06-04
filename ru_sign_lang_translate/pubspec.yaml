@@ -119,6 +119,8 @@ dependencies:
 
   flutter_spinkit: ^5.2.1
 
+  video_player: ^2.8.6
+
 #dev_dependencies:
 #  build_runner: ^2.0.3
 #  flutter_gen_runner: ^3.0.1

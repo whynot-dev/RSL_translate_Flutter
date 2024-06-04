@@ -7,9 +7,11 @@ class TranslatorState extends BaseBlocState with _$TranslatorState {
     CameraController? cameraController,
     Uint8List? imageBytes,
     String? currentGesture,
+    @Default(false)bool needLoader,
     @Default([])List<String> gestures,
 
   }) = _TranslatorState;
 }
 
-class NavigateBack extends BlocAction{}
+class ShowLastPredictionsBottomSheet extends BlocAction{}
+

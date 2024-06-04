@@ -19,3 +19,7 @@
 //   const factory NavigateAction.navigateToWebView(NavigateType navigateType, {required String url}) = NavigateToWebView;
 // //factory NavigateAction.navigateToNavigation(NavigateType navigateType) = NavigateToNavigation;
 // }
+
+import 'package:ru_sign_lang_translate/core/bloc/bloc_action.dart';
+
+class NavigateBack extends BlocAction{}

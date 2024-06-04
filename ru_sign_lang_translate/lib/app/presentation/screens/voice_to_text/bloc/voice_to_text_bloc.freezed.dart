@@ -138,32 +138,38 @@ mixin _$VoiceToTextEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function() backClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function()? backClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function()? backClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -225,6 +231,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function() backClicked,
   }) {
     return init();
   }
@@ -233,6 +240,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function()? backClicked,
   }) {
     return init?.call();
   }
@@ -241,6 +249,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function()? backClicked,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -253,6 +262,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
   }) {
     return init(this);
   }
@@ -261,6 +271,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
   }) {
     return init?.call(this);
   }
@@ -269,6 +280,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -280,4 +292,106 @@ class _$InitImpl implements Init {
 
 abstract class Init implements VoiceToTextEvent {
   const factory Init() = _$InitImpl;
+}
+
+/// @nodoc
+abstract class _$$BackClickedImplCopyWith<$Res> {
+  factory _$$BackClickedImplCopyWith(
+          _$BackClickedImpl value, $Res Function(_$BackClickedImpl) then) =
+      __$$BackClickedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$BackClickedImplCopyWithImpl<$Res>
+    extends _$VoiceToTextEventCopyWithImpl<$Res, _$BackClickedImpl>
+    implements _$$BackClickedImplCopyWith<$Res> {
+  __$$BackClickedImplCopyWithImpl(
+      _$BackClickedImpl _value, $Res Function(_$BackClickedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$BackClickedImpl implements BackClicked {
+  const _$BackClickedImpl();
+
+  @override
+  String toString() {
+    return 'VoiceToTextEvent.backClicked()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$BackClickedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() backClicked,
+  }) {
+    return backClicked();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? backClicked,
+  }) {
+    return backClicked?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? backClicked,
+    required TResult orElse(),
+  }) {
+    if (backClicked != null) {
+      return backClicked();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
+  }) {
+    return backClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
+  }) {
+    return backClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
+    required TResult orElse(),
+  }) {
+    if (backClicked != null) {
+      return backClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class BackClicked implements VoiceToTextEvent {
+  const factory BackClicked() = _$BackClickedImpl;
 }

@@ -11,18 +11,17 @@ import 'app/resources/app_styles.dart';
 import 'di/injection.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  await WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(AppStyles.darkStyle);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setUpLocator();
-  Directory directory = await pathProvider.getApplicationDocumentsDirectory();
-  Hive
-    ..init(directory.path);
 
-  runZonedGuarded(() {
-    runApp(App());
-  }, (error, stackTrace) {
-    print('runZonedGuarded: Caught error in my root zone.\n $error $stackTrace');
-  });
+  runApp(App());
+
+  // runZonedGuarded(() {
+  //
+  // }, (error, stackTrace) {
+  //   print('runZonedGuarded: Caught error in my root zone.\n $error $stackTrace');
+  // });
 }

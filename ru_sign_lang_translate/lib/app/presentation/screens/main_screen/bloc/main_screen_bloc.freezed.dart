@@ -138,18 +138,21 @@ mixin _$MainScreenEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function() translateClicked,
+    required TResult Function() educationClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
     TResult? Function()? translateClicked,
+    TResult? Function()? educationClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function()? translateClicked,
+    TResult Function()? educationClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -157,18 +160,21 @@ mixin _$MainScreenEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
     required TResult Function(TranslateClicked value) translateClicked,
+    required TResult Function(EducationClicked value) educationClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
     TResult? Function(TranslateClicked value)? translateClicked,
+    TResult? Function(EducationClicked value)? educationClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
     TResult Function(TranslateClicked value)? translateClicked,
+    TResult Function(EducationClicked value)? educationClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -231,6 +237,7 @@ class _$InitImpl implements Init {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function() translateClicked,
+    required TResult Function() educationClicked,
   }) {
     return init();
   }
@@ -240,6 +247,7 @@ class _$InitImpl implements Init {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
     TResult? Function()? translateClicked,
+    TResult? Function()? educationClicked,
   }) {
     return init?.call();
   }
@@ -249,6 +257,7 @@ class _$InitImpl implements Init {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function()? translateClicked,
+    TResult Function()? educationClicked,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -262,6 +271,7 @@ class _$InitImpl implements Init {
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
     required TResult Function(TranslateClicked value) translateClicked,
+    required TResult Function(EducationClicked value) educationClicked,
   }) {
     return init(this);
   }
@@ -271,6 +281,7 @@ class _$InitImpl implements Init {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
     TResult? Function(TranslateClicked value)? translateClicked,
+    TResult? Function(EducationClicked value)? educationClicked,
   }) {
     return init?.call(this);
   }
@@ -280,6 +291,7 @@ class _$InitImpl implements Init {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
     TResult Function(TranslateClicked value)? translateClicked,
+    TResult Function(EducationClicked value)? educationClicked,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -333,6 +345,7 @@ class _$TranslateClickedImpl implements TranslateClicked {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function() translateClicked,
+    required TResult Function() educationClicked,
   }) {
     return translateClicked();
   }
@@ -342,6 +355,7 @@ class _$TranslateClickedImpl implements TranslateClicked {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
     TResult? Function()? translateClicked,
+    TResult? Function()? educationClicked,
   }) {
     return translateClicked?.call();
   }
@@ -351,6 +365,7 @@ class _$TranslateClickedImpl implements TranslateClicked {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function()? translateClicked,
+    TResult Function()? educationClicked,
     required TResult orElse(),
   }) {
     if (translateClicked != null) {
@@ -364,6 +379,7 @@ class _$TranslateClickedImpl implements TranslateClicked {
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
     required TResult Function(TranslateClicked value) translateClicked,
+    required TResult Function(EducationClicked value) educationClicked,
   }) {
     return translateClicked(this);
   }
@@ -373,6 +389,7 @@ class _$TranslateClickedImpl implements TranslateClicked {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
     TResult? Function(TranslateClicked value)? translateClicked,
+    TResult? Function(EducationClicked value)? educationClicked,
   }) {
     return translateClicked?.call(this);
   }
@@ -382,6 +399,7 @@ class _$TranslateClickedImpl implements TranslateClicked {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
     TResult Function(TranslateClicked value)? translateClicked,
+    TResult Function(EducationClicked value)? educationClicked,
     required TResult orElse(),
   }) {
     if (translateClicked != null) {
@@ -393,4 +411,112 @@ class _$TranslateClickedImpl implements TranslateClicked {
 
 abstract class TranslateClicked implements MainScreenEvent {
   const factory TranslateClicked() = _$TranslateClickedImpl;
+}
+
+/// @nodoc
+abstract class _$$EducationClickedImplCopyWith<$Res> {
+  factory _$$EducationClickedImplCopyWith(_$EducationClickedImpl value,
+          $Res Function(_$EducationClickedImpl) then) =
+      __$$EducationClickedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$EducationClickedImplCopyWithImpl<$Res>
+    extends _$MainScreenEventCopyWithImpl<$Res, _$EducationClickedImpl>
+    implements _$$EducationClickedImplCopyWith<$Res> {
+  __$$EducationClickedImplCopyWithImpl(_$EducationClickedImpl _value,
+      $Res Function(_$EducationClickedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$EducationClickedImpl implements EducationClicked {
+  const _$EducationClickedImpl();
+
+  @override
+  String toString() {
+    return 'MainScreenEvent.educationClicked()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$EducationClickedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() translateClicked,
+    required TResult Function() educationClicked,
+  }) {
+    return educationClicked();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? translateClicked,
+    TResult? Function()? educationClicked,
+  }) {
+    return educationClicked?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? translateClicked,
+    TResult Function()? educationClicked,
+    required TResult orElse(),
+  }) {
+    if (educationClicked != null) {
+      return educationClicked();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(TranslateClicked value) translateClicked,
+    required TResult Function(EducationClicked value) educationClicked,
+  }) {
+    return educationClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(TranslateClicked value)? translateClicked,
+    TResult? Function(EducationClicked value)? educationClicked,
+  }) {
+    return educationClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(TranslateClicked value)? translateClicked,
+    TResult Function(EducationClicked value)? educationClicked,
+    required TResult orElse(),
+  }) {
+    if (educationClicked != null) {
+      return educationClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EducationClicked implements MainScreenEvent {
+  const factory EducationClicked() = _$EducationClickedImpl;
 }

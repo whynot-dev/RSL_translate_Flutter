@@ -13,6 +13,7 @@ import 'package:image/image.dart' as image_lib;
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:ru_sign_lang_translate/app/navigation/navigation_action.dart';
 import 'package:ru_sign_lang_translate/app/navigation/navigation_type.dart';
 import 'package:ru_sign_lang_translate/core/bloc/base_bloc_state.dart';
 import 'package:ru_sign_lang_translate/core/bloc/bloc_action.dart';
@@ -53,7 +54,6 @@ void createIsolateSession(SendPort sendPort) async {
       List<Uint8List> inputQueue = message;
 
       Float32List float32list = processInput(inputQueue);
-      // receivePortIsolate.timeout(Duration(milliseconds: 200));
 
       inputOrt = OrtValueTensor.createTensorWithDataList(float32list, [1, 3, 32, 224, 224]);
       final inputs = {session.inputNames.first: inputOrt};
@@ -76,8 +76,6 @@ void createIsolateSession(SendPort sendPort) async {
 
       print('${topkConfidence}:${resultLabels.first}');
 
-
-
       if ((topkConfidence.maxOrNull ?? 0) < threshold) {
         sendPort.send('');
       } else {
@@ -85,13 +83,13 @@ void createIsolateSession(SendPort sendPort) async {
         print('${resultLabels} + !!!!!!!!!');
       }
     } else if (message is String) {
-      if(message == 'close_session'){
+      if (message == 'close_session') {
         runOptions.release();
         sessionOptions.release();
         session.release();
         OrtEnv.instance.release();
         print('----- Session closed ------');
-      }else{
+      } else {
         print('----- message in isolate:$message ------');
       }
     } else {
@@ -108,44 +106,36 @@ class TranslatorBloc extends Bloc<TranslatorEvent, TranslatorState> {
     on<GestureRecognized>(_gestureRecognized);
     on<SwitchCameraClicked>(_switchCameraClicked);
     on<BackClicked>(_backClicked);
+    on<ShowLastPredictionsClicked>(_showLastPredictionsClicked);
+    on<StartProcessing>(_startProcessing);
     add(TranslatorEvent.init());
   }
 
   SendPort? _sendPortIsolate;
-  late final ReceivePort? _receivePort;
+  final ReceivePort _receivePort = ReceivePort();
   late final List<CameraDescription> _cameras;
   late final FlutterIsolate _isolate;
 
+  List<Uint8List> _inputQueue = [];
+  Uint8List? _imageBytes;
+  bool _isProcessing = false;
+
   FutureOr<void> _init(Init event, Emitter<TranslatorState> emit) async {
-    _cameras = await availableCameras();
-    final _cameraController = CameraController(
-      _cameras[0],
-      ResolutionPreset.low,
-    );
-    await _cameraController.initialize().catchError((Object e) {
-      if (e is CameraException) {
-        switch (e.code) {
-          case 'CameraAccessDenied':
-            // Handle access errors here.
-            break;
-          default:
-            // Handle other errors here.
-            break;
-        }
-      }
-    });
+    emit(state.copyWith(needLoader: true));
 
-    List<Uint8List> inputQueue = [];
-
-    Uint8List? _imageBytes;
+    final _cameraController = await _initCameraController();
 
     emit(state.copyWith(cameraController: _cameraController));
 
-    bool _isProcessing = false;
+    await _startPortListener();
 
-    _receivePort = ReceivePort();
+    _isolate = await FlutterIsolate.spawn(createIsolateSession, _receivePort.sendPort);
 
-    _receivePort?.listen((data) {
+    await _startCameraStream();
+  }
+
+  FutureOr<void> _startPortListener() async {
+    _receivePort.listen((data) {
       print("Received message from isolate $data");
       if (data is SendPort) {
         _sendPortIsolate = data;
@@ -154,21 +144,27 @@ class TranslatorBloc extends Bloc<TranslatorEvent, TranslatorState> {
         String result = data;
         if (result.isNotEmpty) {
           print('--------result--------------$result-----------------------');
-          inputQueue.clear();
+          _inputQueue.clear();
           _isProcessing = false;
-          if ((state.gestures.isNotEmpty && result != state.gestures.last) || state.gestures.isEmpty) {
+          if ((state.gestures.isNotEmpty && result != state.gestures.last && result != 'no') ||
+              (state.gestures.isEmpty && result != 'no')) {
             add(TranslatorEvent.gestureRecognized(result));
           }
         } else {
-          inputQueue.clear();
+          _inputQueue.clear();
           _isProcessing = false;
         }
       }
     });
+  }
 
-    _isolate = await FlutterIsolate.spawn(createIsolateSession, _receivePort!.sendPort);
-    //
-    _cameraController.startImageStream((image) {
+  FutureOr<void> _startCameraStream() async {
+    if (state.cameraController != null && state.cameraController!.value.isStreamingImages) {
+      await state.cameraController?.stopImageStream();
+    }
+
+    _inputQueue.clear();
+    state.cameraController?.startImageStream((image) {
       if (_sendPortIsolate != null) {
         if (!_isProcessing) {
           image_lib.Image? decodedImage = ImageUtils.processCameraImage(image);
@@ -177,23 +173,16 @@ class TranslatorBloc extends Bloc<TranslatorEvent, TranslatorState> {
 
           _imageBytes = resizedImage.getBytes();
 
-          //_imageBytes = image_lib.encodeJpg(resizedImage);
-
           if (_imageBytes != null) {
-            if (inputQueue.length >= 32) {
-              inputQueue.removeAt(0);
+            if (_inputQueue.length >= 32) {
+              _inputQueue.removeAt(0);
             }
-            inputQueue.add(_imageBytes!);
+            _inputQueue.add(_imageBytes!);
           }
-          if (inputQueue.length == 32) {
+          if (_inputQueue.length == 32) {
             _isProcessing = true;
-
-            _sendPortIsolate?.send(inputQueue);
-
-            // if (predict != null) {
-            //   inputQueue.clear();
-            // }
-            //_cameraController.stopImageStream();
+            add(TranslatorEvent.startProcessing());
+            _sendPortIsolate?.send(_inputQueue);
           }
         }
       }
@@ -206,25 +195,59 @@ class TranslatorBloc extends Bloc<TranslatorEvent, TranslatorState> {
       _gestures.removeAt(0);
     }
     _gestures.add(event.gesture);
-    emit(state.copyWith(currentGesture: event.gesture, gestures: _gestures));
+    emit(state.copyWith(currentGesture: event.gesture, gestures: _gestures, needLoader: false));
   }
 
   FutureOr<void> _switchCameraClicked(SwitchCameraClicked event, Emitter<TranslatorState> emit) async {
     if (state.cameraController?.description == _cameras[0]) {
       await state.cameraController?.setDescription(_cameras[1]);
+      await _startCameraStream();
     } else if (state.cameraController?.description == _cameras[1]) {
       await state.cameraController?.setDescription(_cameras[0]);
+      await _startCameraStream();
     }
   }
 
   FutureOr<void> _backClicked(BackClicked event, Emitter<TranslatorState> emit) async {
     await state.cameraController?.stopImageStream();
     _sendPortIsolate?.send('close_session');
-    _receivePort?.close();
+    _receivePort.close();
     _isolate.kill();
     state.cameraController?.dispose();
     emit(state.copyWith(action: null));
     emit(state.copyWith(action: NavigateBack()));
+  }
+
+  FutureOr<void> _showLastPredictionsClicked(ShowLastPredictionsClicked event, Emitter<TranslatorState> emit) async {
+    emit(state.copyWith(action: null));
+    emit(state.copyWith(action: ShowLastPredictionsBottomSheet()));
+  }
+
+  FutureOr<void> _startProcessing(StartProcessing event, Emitter<TranslatorState> emit) async {
+    emit(state.copyWith(needLoader: true));
+  }
+
+  Future<CameraController> _initCameraController() async {
+    _cameras = await availableCameras();
+
+    final _cameraController = CameraController(
+      _cameras[0],
+      ResolutionPreset.low,
+    );
+
+    await _cameraController.initialize().catchError((Object e) {
+      if (e is CameraException) {
+        switch (e.code) {
+          case 'CameraAccessDenied':
+            // Handle access errors here.
+            break;
+          default:
+            // Handle other errors here.
+            break;
+        }
+      }
+    });
+    return _cameraController;
   }
 
 // FutureOr<void> _closeSession() {
@@ -263,6 +286,8 @@ class TranslatorBloc extends Bloc<TranslatorEvent, TranslatorState> {
 }
 
 Float32List processInput(List<Uint8List> inputQueue) {
+  // [32,224,224,3] => [1,3,32,224,224]
+
   // Размерности для многомерного списка
   const int dim1 = 32;
   const int dim2 = 224;
@@ -273,7 +298,6 @@ Float32List processInput(List<Uint8List> inputQueue) {
 
   Float32List result = Float32List(totalElements);
 
-  // Заполнение Float32List из inputQueue
   for (int i = 0; i < dim1; i++) {
     for (int j = 0; j < dim2; j++) {
       for (int k = 0; k < dim3; k++) {

@@ -6,4 +6,6 @@ class TranslatorEvent with _$TranslatorEvent {
   const factory TranslatorEvent.gestureRecognized(String gesture) = GestureRecognized;
   const factory TranslatorEvent.switchCameraClicked() = SwitchCameraClicked;
   const factory TranslatorEvent.backClicked() = BackClicked;
+  const factory TranslatorEvent.showLastPredictionsClicked() = ShowLastPredictionsClicked;
+  const factory TranslatorEvent.startProcessing() = StartProcessing;
 }

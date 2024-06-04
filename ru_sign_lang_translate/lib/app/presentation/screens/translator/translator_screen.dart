@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ru_sign_lang_translate/app/navigation/navigation_action.dart';
 import 'package:ru_sign_lang_translate/app/resources/app_colors.dart';
 import 'package:ru_sign_lang_translate/app/widgets/app_bars/default_appbar.dart';
 import 'package:ru_sign_lang_translate/app/widgets/backgrounds/default_black_background.dart';
 import 'package:ru_sign_lang_translate/app/widgets/backgrounds/default_white_background.dart';
+import 'package:ru_sign_lang_translate/app/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:ru_sign_lang_translate/app/widgets/buttons/app_button.dart';
+import 'package:ru_sign_lang_translate/app/widgets/buttons/default_button.dart';
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_listener.dart';
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_state_widget.dart';
 
@@ -33,20 +37,20 @@ class _TranslatorScreenState extends BaseBlocStateWidget<TranslatorScreen, Trans
           if (action is NavigateBack) {
             Navigator.pop(context);
           }
+          if (action is ShowLastPredictionsBottomSheet) {
+            showLastPredictionsBottomSheet(gestures: state.gestures);
+          }
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             _buildCamera(),
             const SizedBox(height: 20),
-            _buildCurrentPredict(),
-            const SizedBox(height: 10),
-            _buildOldPredictions(),
-            const SizedBox(height: 10),
-            _buildResizedFrame(),
-            const SizedBox(height: 10),
+            _buildCurrentPrediction(),
             _buildLoader(),
-            const SizedBox(height: 40),
+            const SizedBox(height: 15),
+            _buildLastPredictionsButton(),
+            const SizedBox(height: 20),
           ],
         ),
       );
@@ -56,11 +60,19 @@ class _TranslatorScreenState extends BaseBlocStateWidget<TranslatorScreen, Trans
         builder: (context, state) => Expanded(
           child: Stack(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
-                child: Container(
-                  color: AppColors.black,
-                  child: state.cameraController != null ? CameraPreview(state.cameraController!) : const SizedBox(),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(color: AppColors.gray6, blurRadius: 8, offset: const Offset(2, 10)),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+                  child: Container(
+                    color: AppColors.black,
+                    child: state.cameraController != null ? CameraPreview(state.cameraController!) : const SizedBox(),
+                  ),
                 ),
               ),
               DefaultAppbar(
@@ -99,13 +111,6 @@ class _TranslatorScreenState extends BaseBlocStateWidget<TranslatorScreen, Trans
         ),
       );
 
-  Widget _buildResizedFrame() => BlocBuilder<TranslatorBloc, TranslatorState>(
-        buildWhen: (previous, current) => previous.imageBytes != current.imageBytes,
-        builder: (context, state) => Container(
-          child: state.imageBytes != null ? Image.memory(state.imageBytes!) : const SizedBox(),
-        ),
-      );
-
   Widget _buildCameraSwitchButton(BuildContext context) => Container(
         padding: const EdgeInsets.all(12),
         child: IconButton(
@@ -121,8 +126,110 @@ class _TranslatorScreenState extends BaseBlocStateWidget<TranslatorScreen, Trans
         ),
       );
 
-  Widget _buildLoader() => SpinKitThreeBounce(
-    size: 25,
-    color: AppColors.black4,
-  );
+  Widget _buildLoader() => BlocBuilder<TranslatorBloc, TranslatorState>(
+        buildWhen: (previous, current) => previous.needLoader != current.needLoader,
+        builder: (context, state) => state.needLoader
+            ? SpinKitThreeBounce(
+                size: 25,
+                color: AppColors.black4,
+              )
+            : const SizedBox(height: 25),
+      );
+
+  Widget _buildCurrentPrediction() => Column(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'Текущий жест',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
+                color: AppColors.onBackground,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                boxShadow: [
+                  BoxShadow(color: AppColors.gray5, blurRadius: 10, offset: const Offset(0, 0)),
+                ],
+              ),
+              child: _buildTextCurrentPrediction(),
+            ),
+          ),
+        ],
+      );
+
+  Widget _buildTextCurrentPrediction() => BlocBuilder<TranslatorBloc, TranslatorState>(
+        buildWhen: (previous, current) => previous.currentGesture != current.currentGesture,
+        builder: (context, state) => Text(
+          state.currentGesture ?? '---',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            color: AppColors.onBackground,
+          ),
+        ),
+      );
+
+  Widget _buildLastPredictionsButton() => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: DefaultButton(
+          text: 'Последние 5 жестов',
+          onPressed: () {
+            getBloc().add(TranslatorEvent.showLastPredictionsClicked());
+          },
+        ),
+      );
+
+  void showLastPredictionsBottomSheet({List<String> gestures = const []}) {
+    AppBottomSheet.show(
+      context,
+      Container(
+        height: MediaQuery.of(context).size.height / 2.5,
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: 4,
+                width: 48,
+                decoration: BoxDecoration(color: AppColors.gray2, borderRadius: BorderRadius.circular(2)),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Последние 5 жестов',
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+                color: AppColors.onBackground,
+              ),
+            ),
+            const SizedBox(height: 12),
+            ...gestures.map(
+              (item) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Text(
+                  item,
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 19, color: AppColors.onBackground),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

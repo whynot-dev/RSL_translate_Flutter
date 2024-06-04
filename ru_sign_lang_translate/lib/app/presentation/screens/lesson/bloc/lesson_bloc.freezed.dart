@@ -17,6 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$LessonState {
   BlocAction? get action => throw _privateConstructorUsedError;
+  LessonEntity get lesson => throw _privateConstructorUsedError;
+  LessonType get selectedLessonType => throw _privateConstructorUsedError;
+  CameraController? get cameraController => throw _privateConstructorUsedError;
+  VideoPlayerController? get videoController =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LessonStateCopyWith<LessonState> get copyWith =>
@@ -29,7 +34,12 @@ abstract class $LessonStateCopyWith<$Res> {
           LessonState value, $Res Function(LessonState) then) =
       _$LessonStateCopyWithImpl<$Res, LessonState>;
   @useResult
-  $Res call({BlocAction? action});
+  $Res call(
+      {BlocAction? action,
+      LessonEntity lesson,
+      LessonType selectedLessonType,
+      CameraController? cameraController,
+      VideoPlayerController? videoController});
 }
 
 /// @nodoc
@@ -46,12 +56,32 @@ class _$LessonStateCopyWithImpl<$Res, $Val extends LessonState>
   @override
   $Res call({
     Object? action = freezed,
+    Object? lesson = null,
+    Object? selectedLessonType = null,
+    Object? cameraController = freezed,
+    Object? videoController = freezed,
   }) {
     return _then(_value.copyWith(
       action: freezed == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
               as BlocAction?,
+      lesson: null == lesson
+          ? _value.lesson
+          : lesson // ignore: cast_nullable_to_non_nullable
+              as LessonEntity,
+      selectedLessonType: null == selectedLessonType
+          ? _value.selectedLessonType
+          : selectedLessonType // ignore: cast_nullable_to_non_nullable
+              as LessonType,
+      cameraController: freezed == cameraController
+          ? _value.cameraController
+          : cameraController // ignore: cast_nullable_to_non_nullable
+              as CameraController?,
+      videoController: freezed == videoController
+          ? _value.videoController
+          : videoController // ignore: cast_nullable_to_non_nullable
+              as VideoPlayerController?,
     ) as $Val);
   }
 }
@@ -64,7 +94,12 @@ abstract class _$$LessonStateImplCopyWith<$Res>
       __$$LessonStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({BlocAction? action});
+  $Res call(
+      {BlocAction? action,
+      LessonEntity lesson,
+      LessonType selectedLessonType,
+      CameraController? cameraController,
+      VideoPlayerController? videoController});
 }
 
 /// @nodoc
@@ -79,27 +114,73 @@ class __$$LessonStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? action = freezed,
+    Object? lesson = null,
+    Object? selectedLessonType = null,
+    Object? cameraController = freezed,
+    Object? videoController = freezed,
   }) {
     return _then(_$LessonStateImpl(
       action: freezed == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
               as BlocAction?,
+      lesson: null == lesson
+          ? _value.lesson
+          : lesson // ignore: cast_nullable_to_non_nullable
+              as LessonEntity,
+      selectedLessonType: null == selectedLessonType
+          ? _value.selectedLessonType
+          : selectedLessonType // ignore: cast_nullable_to_non_nullable
+              as LessonType,
+      cameraController: freezed == cameraController
+          ? _value.cameraController
+          : cameraController // ignore: cast_nullable_to_non_nullable
+              as CameraController?,
+      videoController: freezed == videoController
+          ? _value.videoController
+          : videoController // ignore: cast_nullable_to_non_nullable
+              as VideoPlayerController?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$LessonStateImpl implements _LessonState {
-  _$LessonStateImpl({this.action});
+class _$LessonStateImpl with DiagnosticableTreeMixin implements _LessonState {
+  _$LessonStateImpl(
+      {this.action,
+      required this.lesson,
+      this.selectedLessonType = LessonType.theory,
+      this.cameraController,
+      this.videoController});
 
   @override
   final BlocAction? action;
+  @override
+  final LessonEntity lesson;
+  @override
+  @JsonKey()
+  final LessonType selectedLessonType;
+  @override
+  final CameraController? cameraController;
+  @override
+  final VideoPlayerController? videoController;
 
   @override
-  String toString() {
-    return 'LessonState(action: $action)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'LessonState(action: $action, lesson: $lesson, selectedLessonType: $selectedLessonType, cameraController: $cameraController, videoController: $videoController)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'LessonState'))
+      ..add(DiagnosticsProperty('action', action))
+      ..add(DiagnosticsProperty('lesson', lesson))
+      ..add(DiagnosticsProperty('selectedLessonType', selectedLessonType))
+      ..add(DiagnosticsProperty('cameraController', cameraController))
+      ..add(DiagnosticsProperty('videoController', videoController));
   }
 
   @override
@@ -107,11 +188,19 @@ class _$LessonStateImpl implements _LessonState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LessonStateImpl &&
-            (identical(other.action, action) || other.action == action));
+            (identical(other.action, action) || other.action == action) &&
+            (identical(other.lesson, lesson) || other.lesson == lesson) &&
+            (identical(other.selectedLessonType, selectedLessonType) ||
+                other.selectedLessonType == selectedLessonType) &&
+            (identical(other.cameraController, cameraController) ||
+                other.cameraController == cameraController) &&
+            (identical(other.videoController, videoController) ||
+                other.videoController == videoController));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, action);
+  int get hashCode => Object.hash(runtimeType, action, lesson,
+      selectedLessonType, cameraController, videoController);
 
   @JsonKey(ignore: true)
   @override
@@ -121,10 +210,23 @@ class _$LessonStateImpl implements _LessonState {
 }
 
 abstract class _LessonState implements LessonState {
-  factory _LessonState({final BlocAction? action}) = _$LessonStateImpl;
+  factory _LessonState(
+      {final BlocAction? action,
+      required final LessonEntity lesson,
+      final LessonType selectedLessonType,
+      final CameraController? cameraController,
+      final VideoPlayerController? videoController}) = _$LessonStateImpl;
 
   @override
   BlocAction? get action;
+  @override
+  LessonEntity get lesson;
+  @override
+  LessonType get selectedLessonType;
+  @override
+  CameraController? get cameraController;
+  @override
+  VideoPlayerController? get videoController;
   @override
   @JsonKey(ignore: true)
   _$$LessonStateImplCopyWith<_$LessonStateImpl> get copyWith =>
@@ -136,32 +238,50 @@ mixin _$LessonEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function() backClicked,
+    required TResult Function(LessonType lessonType) lessonTypeChanged,
+    required TResult Function() switchCameraClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function()? backClicked,
+    TResult? Function(LessonType lessonType)? lessonTypeChanged,
+    TResult? Function()? switchCameraClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function()? backClicked,
+    TResult Function(LessonType lessonType)? lessonTypeChanged,
+    TResult Function()? switchCameraClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(LessonTypeChanged value) lessonTypeChanged,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -202,12 +322,18 @@ class __$$InitImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitImpl implements Init {
+class _$InitImpl with DiagnosticableTreeMixin implements Init {
   const _$InitImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'LessonEvent.init()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'LessonEvent.init'));
   }
 
   @override
@@ -223,6 +349,9 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function() backClicked,
+    required TResult Function(LessonType lessonType) lessonTypeChanged,
+    required TResult Function() switchCameraClicked,
   }) {
     return init();
   }
@@ -231,6 +360,9 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function()? backClicked,
+    TResult? Function(LessonType lessonType)? lessonTypeChanged,
+    TResult? Function()? switchCameraClicked,
   }) {
     return init?.call();
   }
@@ -239,6 +371,9 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function()? backClicked,
+    TResult Function(LessonType lessonType)? lessonTypeChanged,
+    TResult Function()? switchCameraClicked,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -251,6 +386,9 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(LessonTypeChanged value) lessonTypeChanged,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
   }) {
     return init(this);
   }
@@ -259,6 +397,9 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
   }) {
     return init?.call(this);
   }
@@ -267,6 +408,9 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -278,4 +422,406 @@ class _$InitImpl implements Init {
 
 abstract class Init implements LessonEvent {
   const factory Init() = _$InitImpl;
+}
+
+/// @nodoc
+abstract class _$$BackClickedImplCopyWith<$Res> {
+  factory _$$BackClickedImplCopyWith(
+          _$BackClickedImpl value, $Res Function(_$BackClickedImpl) then) =
+      __$$BackClickedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$BackClickedImplCopyWithImpl<$Res>
+    extends _$LessonEventCopyWithImpl<$Res, _$BackClickedImpl>
+    implements _$$BackClickedImplCopyWith<$Res> {
+  __$$BackClickedImplCopyWithImpl(
+      _$BackClickedImpl _value, $Res Function(_$BackClickedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$BackClickedImpl with DiagnosticableTreeMixin implements BackClicked {
+  const _$BackClickedImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'LessonEvent.backClicked()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'LessonEvent.backClicked'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$BackClickedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() backClicked,
+    required TResult Function(LessonType lessonType) lessonTypeChanged,
+    required TResult Function() switchCameraClicked,
+  }) {
+    return backClicked();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? backClicked,
+    TResult? Function(LessonType lessonType)? lessonTypeChanged,
+    TResult? Function()? switchCameraClicked,
+  }) {
+    return backClicked?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? backClicked,
+    TResult Function(LessonType lessonType)? lessonTypeChanged,
+    TResult Function()? switchCameraClicked,
+    required TResult orElse(),
+  }) {
+    if (backClicked != null) {
+      return backClicked();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(LessonTypeChanged value) lessonTypeChanged,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+  }) {
+    return backClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+  }) {
+    return backClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    required TResult orElse(),
+  }) {
+    if (backClicked != null) {
+      return backClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class BackClicked implements LessonEvent {
+  const factory BackClicked() = _$BackClickedImpl;
+}
+
+/// @nodoc
+abstract class _$$LessonTypeChangedImplCopyWith<$Res> {
+  factory _$$LessonTypeChangedImplCopyWith(_$LessonTypeChangedImpl value,
+          $Res Function(_$LessonTypeChangedImpl) then) =
+      __$$LessonTypeChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({LessonType lessonType});
+}
+
+/// @nodoc
+class __$$LessonTypeChangedImplCopyWithImpl<$Res>
+    extends _$LessonEventCopyWithImpl<$Res, _$LessonTypeChangedImpl>
+    implements _$$LessonTypeChangedImplCopyWith<$Res> {
+  __$$LessonTypeChangedImplCopyWithImpl(_$LessonTypeChangedImpl _value,
+      $Res Function(_$LessonTypeChangedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lessonType = null,
+  }) {
+    return _then(_$LessonTypeChangedImpl(
+      null == lessonType
+          ? _value.lessonType
+          : lessonType // ignore: cast_nullable_to_non_nullable
+              as LessonType,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LessonTypeChangedImpl
+    with DiagnosticableTreeMixin
+    implements LessonTypeChanged {
+  const _$LessonTypeChangedImpl(this.lessonType);
+
+  @override
+  final LessonType lessonType;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'LessonEvent.lessonTypeChanged(lessonType: $lessonType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'LessonEvent.lessonTypeChanged'))
+      ..add(DiagnosticsProperty('lessonType', lessonType));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LessonTypeChangedImpl &&
+            (identical(other.lessonType, lessonType) ||
+                other.lessonType == lessonType));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, lessonType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LessonTypeChangedImplCopyWith<_$LessonTypeChangedImpl> get copyWith =>
+      __$$LessonTypeChangedImplCopyWithImpl<_$LessonTypeChangedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() backClicked,
+    required TResult Function(LessonType lessonType) lessonTypeChanged,
+    required TResult Function() switchCameraClicked,
+  }) {
+    return lessonTypeChanged(lessonType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? backClicked,
+    TResult? Function(LessonType lessonType)? lessonTypeChanged,
+    TResult? Function()? switchCameraClicked,
+  }) {
+    return lessonTypeChanged?.call(lessonType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? backClicked,
+    TResult Function(LessonType lessonType)? lessonTypeChanged,
+    TResult Function()? switchCameraClicked,
+    required TResult orElse(),
+  }) {
+    if (lessonTypeChanged != null) {
+      return lessonTypeChanged(lessonType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(LessonTypeChanged value) lessonTypeChanged,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+  }) {
+    return lessonTypeChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+  }) {
+    return lessonTypeChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    required TResult orElse(),
+  }) {
+    if (lessonTypeChanged != null) {
+      return lessonTypeChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LessonTypeChanged implements LessonEvent {
+  const factory LessonTypeChanged(final LessonType lessonType) =
+      _$LessonTypeChangedImpl;
+
+  LessonType get lessonType;
+  @JsonKey(ignore: true)
+  _$$LessonTypeChangedImplCopyWith<_$LessonTypeChangedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SwitchCameraClickedImplCopyWith<$Res> {
+  factory _$$SwitchCameraClickedImplCopyWith(_$SwitchCameraClickedImpl value,
+          $Res Function(_$SwitchCameraClickedImpl) then) =
+      __$$SwitchCameraClickedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SwitchCameraClickedImplCopyWithImpl<$Res>
+    extends _$LessonEventCopyWithImpl<$Res, _$SwitchCameraClickedImpl>
+    implements _$$SwitchCameraClickedImplCopyWith<$Res> {
+  __$$SwitchCameraClickedImplCopyWithImpl(_$SwitchCameraClickedImpl _value,
+      $Res Function(_$SwitchCameraClickedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SwitchCameraClickedImpl
+    with DiagnosticableTreeMixin
+    implements SwitchCameraClicked {
+  const _$SwitchCameraClickedImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'LessonEvent.switchCameraClicked()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'LessonEvent.switchCameraClicked'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SwitchCameraClickedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() backClicked,
+    required TResult Function(LessonType lessonType) lessonTypeChanged,
+    required TResult Function() switchCameraClicked,
+  }) {
+    return switchCameraClicked();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? backClicked,
+    TResult? Function(LessonType lessonType)? lessonTypeChanged,
+    TResult? Function()? switchCameraClicked,
+  }) {
+    return switchCameraClicked?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? backClicked,
+    TResult Function(LessonType lessonType)? lessonTypeChanged,
+    TResult Function()? switchCameraClicked,
+    required TResult orElse(),
+  }) {
+    if (switchCameraClicked != null) {
+      return switchCameraClicked();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(LessonTypeChanged value) lessonTypeChanged,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+  }) {
+    return switchCameraClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+  }) {
+    return switchCameraClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    required TResult orElse(),
+  }) {
+    if (switchCameraClicked != null) {
+      return switchCameraClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SwitchCameraClicked implements LessonEvent {
+  const factory SwitchCameraClicked() = _$SwitchCameraClickedImpl;
 }
