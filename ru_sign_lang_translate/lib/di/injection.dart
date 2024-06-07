@@ -32,21 +32,4 @@ Future setUpLocatorWithDependencies({
     preferencesLocalGateway: injection(),
     navigatorKey: navigatorKey,
   ));
-
-  // injection.registerLazySingleton<MapRemoteGateway>(() => MapRemoteGateway(dio: injection()));
-  //
-  // injection.registerLazySingleton<MapRepository>(() => MapRepository(
-  //       injection(),
-  //       mapRemoteGateway: injection(),
-  //     ));
-  //
-  // injection.registerLazySingleton<DirectionsRemoteGateway>(() => DirectionsRemoteGateway(
-  //       dio: injection(),
-  //       baseUrl: 'https://api.mapbox.com/directions/v5/',
-  //     ));
-  //
-  // injection.registerLazySingleton<DirectionsRepository>(() => DirectionsRepository(
-  //       injection(),
-  //       directionsRemoteGateway: injection(),
-  //     ));
 }

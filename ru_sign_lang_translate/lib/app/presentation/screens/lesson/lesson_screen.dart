@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ru_sign_lang_translate/app/navigation/navigation_action.dart';
 import 'package:ru_sign_lang_translate/app/resources/app_colors.dart';
 import 'package:ru_sign_lang_translate/app/widgets/app_bars/default_appbar.dart';
+import 'package:ru_sign_lang_translate/app/widgets/buttons/default_button.dart';
 import 'package:ru_sign_lang_translate/app/widgets/selectors/switcher_widget.dart';
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_listener.dart';
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_state_widget.dart';
@@ -74,48 +75,53 @@ class _LessonScreenState extends BaseBlocStateWidget<LessonScreen, LessonBloc, L
         buildWhen: (previous, current) => previous.selectedLessonType != current.selectedLessonType,
         builder: (context, state) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(18)),
-            child: AnimatedCrossFade(
-              duration: const Duration(milliseconds: 300),
-              firstChild: _buildVideoPlayer(),
-              secondChild: _buildCamera(),
-              crossFadeState:
-                  state.selectedLessonType == LessonType.theory ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-            ),
+          child: AnimatedCrossFade(
+            duration: const Duration(milliseconds: 350),
+            firstChild: _buildVideoAndDirectionTheory(),
+            secondChild: _buildCameraAndStartButtonWithDirection(),
+            crossFadeState:
+                state.selectedLessonType == LessonType.theory ? CrossFadeState.showFirst : CrossFadeState.showSecond,
           ),
         ),
+      );
+
+  Widget _buildVideoAndDirectionTheory() => Column(
+        children: [
+          _buildVideoPlayer(),
+          const SizedBox(height: 40),
+          _buildDirectionTheory(),
+        ],
       );
 
   Widget _buildVideoPlayer() => BlocBuilder<LessonBloc, LessonState>(
         buildWhen: (previous, current) => previous.videoController != current.videoController,
         builder: (context, state) => state.videoController != null
-            ? Container(
-                decoration: BoxDecoration(
-                  color: AppColors.black,
-                ),
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height / 2.3,
-                    child: AspectRatio(
-                      aspectRatio: state.videoController!.value.aspectRatio,
-                      child: Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          VideoPlayer(state.videoController!),
-                          _ControlsOverlay(
-                            controller: state.videoController!,
-                            onChanged: () {
-                              setState(() {});
-                            },
-                          ),
-                          VideoProgressIndicator(
-                            state.videoController!,
-                            allowScrubbing: true,
-                            padding: const EdgeInsets.only(bottom: 1),
-                          ),
-                        ],
+            ? ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+                child: Container(
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height / 2.3,
+                      child: AspectRatio(
+                        aspectRatio: state.videoController!.value.aspectRatio,
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            VideoPlayer(state.videoController!),
+                            _ControlsOverlay(
+                              controller: state.videoController!,
+                              onChanged: () {
+                                setState(() {});
+                              },
+                            ),
+                            VideoProgressIndicator(
+                              state.videoController!,
+                              allowScrubbing: true,
+                              padding: const EdgeInsets.only(bottom: 1),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -124,14 +130,109 @@ class _LessonScreenState extends BaseBlocStateWidget<LessonScreen, LessonBloc, L
             : const SizedBox(),
       );
 
-  // TODO добавить текст "повторите жест, несколько раз" и выводить что то когда правильно распознало
+  Widget _buildDirectionTheory() => Text(
+        'Посмотрите видеоролик и постарайтесь запомнить жест.',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.onAccent),
+      );
+
+  Widget _buildCameraAndStartButtonWithDirection() => Column(
+        children: [
+          _buildCamera(),
+          const SizedBox(height: 20),
+          _buildDirectionPractice(),
+          const SizedBox(height: 20),
+          _buildStartButton(),
+          const SizedBox(height: 20),
+          _buildStopButton(),
+          const SizedBox(height: 20),
+        ],
+      );
+
   Widget _buildCamera() => BlocBuilder<LessonBloc, LessonState>(
         buildWhen: (previous, current) => previous.cameraController != current.cameraController,
-        builder: (context, state) => Container(
-          color: AppColors.black,
-          child: state.cameraController != null ? CameraPreview(state.cameraController!) : const SizedBox(),
+        builder: (context, state) => ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(18)),
+          child: Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2.3,
+                color: AppColors.black,
+                child: state.cameraController != null ? CameraPreview(state.cameraController!) : const SizedBox(),
+              ),
+              if (state.cameraController != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: _buildCameraSwitchButton(),
+                  ),
+                ),
+            ],
+          ),
         ),
       );
+
+  Widget _buildCameraSwitchButton() => IconButton(
+        alignment: Alignment.center,
+        onPressed: () {
+          getBloc().add(LessonEvent.switchCameraClicked());
+        },
+        visualDensity: VisualDensity.compact,
+        icon: Icon(Icons.flip_camera_ios_outlined),
+        color: AppColors.black,
+        iconSize: 28,
+        padding: const EdgeInsets.all(16),
+        highlightColor: AppColors.gray2,
+        disabledColor: AppColors.black,
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(AppColors.white.withOpacity(0.6)),
+          shape: MaterialStateProperty.all(CircleBorder()),
+        ),
+      );
+
+  Widget _buildDirectionPractice() => BlocBuilder<LessonBloc, LessonState>(
+        buildWhen: (previous, current) =>
+            previous.isStartingPractice != current.isStartingPractice || previous.prediction != current.prediction,
+        builder: (context, state) => state.prediction == null
+            ? Text(
+                state.isStartingPractice ? 'Выполните жест на камеру несколько раз' : '',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.onAccent),
+              )
+            : Text(
+                'Правильно: ${state.prediction}',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.lightGreen),
+              ),
+      );
+
+  Widget _buildStartButton() => BlocBuilder<LessonBloc, LessonState>(
+        buildWhen: (previous, current) => previous.isStartingPractice != current.isStartingPractice,
+        builder: (context, state) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: DefaultButton(
+            text: 'Начать',
+            enabled: !state.isStartingPractice,
+            onPressed: () {
+              getBloc().add(LessonEvent.startClicked());
+            },
+          ),
+        ),
+      );
+
+  Widget _buildStopButton() => BlocBuilder<LessonBloc, LessonState>(
+    buildWhen: (previous, current) => previous.isStartingPractice != current.isStartingPractice,
+    builder: (context, state) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: DefaultButton(
+        text: 'Стоп',
+        color: AppColors.red,
+        enabled: state.isStartingPractice,
+        onPressed: () {
+          getBloc().add(LessonEvent.stopClicked());
+        },
+      ),
+    ),
+  );
 }
 
 class _ControlsOverlay extends StatelessWidget {

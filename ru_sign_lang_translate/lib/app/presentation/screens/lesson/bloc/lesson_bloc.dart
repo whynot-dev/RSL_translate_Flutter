@@ -7,9 +7,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:ru_sign_lang_translate/app/navigation/navigation_action.dart';
-import 'package:ru_sign_lang_translate/app/navigation/navigation_type.dart';
 import 'package:ru_sign_lang_translate/core/bloc/base_bloc_state.dart';
 import 'package:ru_sign_lang_translate/core/bloc/bloc_action.dart';
+import 'package:ru_sign_lang_translate/core/sessions/onnx_isolate_session.dart';
 import 'package:ru_sign_lang_translate/core/utils/image_utils.dart';
 import 'package:ru_sign_lang_translate/domain/entities/lesson_entity.dart';
 import 'package:ru_sign_lang_translate/domain/enums/lesson_type.dart';
@@ -28,13 +28,17 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
     on<BackClicked>(_backClicked);
     on<LessonTypeChanged>(_lessonTypeChanged);
     on<SwitchCameraClicked>(_switchCameraClicked);
+    on<StartClicked>(_startClicked);
+    on<StopClicked>(_stopClicked);
+    on<GestureRecognized>(_gestureRecognized);
     add(LessonEvent.init());
   }
 
   SendPort? _sendPortIsolate;
-  final ReceivePort _receivePort = ReceivePort();
+  ReceivePort _receivePort = ReceivePort();
   late final List<CameraDescription> _cameras;
-  late final FlutterIsolate _isolate;
+  FlutterIsolate? _isolate;
+  StreamSubscription? _subscription;
 
   List<Uint8List> _inputQueue = [];
   Uint8List? _imageBytes;
@@ -47,9 +51,16 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
     emit(state.copyWith(videoController: _videoController, cameraController: _cameraController));
   }
 
-  FutureOr<void> _backClicked(BackClicked event, Emitter<LessonState> emit) {
-    state.cameraController?.dispose();
-    state.videoController?.dispose();
+  FutureOr<void> _backClicked(BackClicked event, Emitter<LessonState> emit) async {
+    if (state.cameraController != null && state.cameraController!.value.isStreamingImages) {
+      await state.cameraController?.stopImageStream();
+    }
+    _sendPortIsolate?.send('close_session');
+    _subscription?.cancel();
+    _receivePort.close();
+    _isolate?.kill();
+    await state.cameraController?.dispose();
+    await state.videoController?.dispose();
 
     emit(state.copyWith());
     emit(state.copyWith(action: NavigateBack()));
@@ -67,6 +78,57 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
       await state.cameraController?.setDescription(_cameras[0]);
       await _startCameraStream();
     }
+  }
+
+  FutureOr<void> _startClicked(StartClicked event, Emitter<LessonState> emit) async {
+    await _startPortListener();
+    _isolate = await FlutterIsolate.spawn(createOnnxIsolateSession, _receivePort.sendPort);
+    await _startCameraStream();
+    emit(state.copyWith(isStartingPractice: true, prediction: null));
+  }
+
+  FutureOr<void> _stopClicked(StopClicked event, Emitter<LessonState> emit) async {
+    if (state.cameraController != null && state.cameraController!.value.isStreamingImages) {
+      await state.cameraController?.stopImageStream();
+    }
+    _sendPortIsolate?.send('close_session');
+    await _subscription?.cancel();
+    _receivePort.close();
+    _receivePort = ReceivePort();
+    _isolate?.kill();
+    emit(state.copyWith(isStartingPractice: false, prediction: null));
+  }
+
+  FutureOr<void> _gestureRecognized(GestureRecognized event, Emitter<LessonState> emit) async {
+    if (state.cameraController != null && state.cameraController!.value.isStreamingImages) {
+      await state.cameraController?.stopImageStream();
+    }
+    _sendPortIsolate?.send('close_session');
+    _isolate?.kill();
+    emit(state.copyWith(isStartingPractice: false, prediction: event.gesture));
+  }
+
+  FutureOr<void> _startPortListener() async {
+    _subscription = _receivePort.listen((data) {
+      print("Received message from isolate $data");
+      if (data is SendPort) {
+        _sendPortIsolate = data;
+      }
+      if (data is String) {
+        String result = data;
+        if (result.isNotEmpty) {
+          print('--------result--------------$result-----------------------');
+          _inputQueue.clear();
+          _isProcessing = false;
+          if (result == state.lesson.valueGesture) {
+            add(LessonEvent.gestureRecognized(result));
+          }
+        } else {
+          _inputQueue.clear();
+          _isProcessing = false;
+        }
+      }
+    });
   }
 
   FutureOr<void> _startCameraStream() async {
@@ -111,10 +173,9 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
       if (e is CameraException) {
         switch (e.code) {
           case 'CameraAccessDenied':
-            // Handle access errors here.
+            print('!---- Error Camera Access Denied ---!');
             break;
           default:
-            // Handle other errors here.
             break;
         }
       }
@@ -122,9 +183,15 @@ class LessonBloc extends Bloc<LessonEvent, LessonState> {
     return _cameraController;
   }
 
-  Future<VideoPlayerController> _initVideoPlayerController() async {
-    final _videoController = VideoPlayerController.networkUrl(Uri.parse(state.lesson.url));
-    await _videoController.initialize();
-    return _videoController;
+  Future<VideoPlayerController?> _initVideoPlayerController() async {
+    try {
+      final _videoController = VideoPlayerController.networkUrl(Uri.parse(state.lesson.url));
+      await _videoController.initialize();
+      return _videoController;
+    } catch (e) {
+      print('!---- Error failed initialize videoController ---!');
+    }
+
+    return null;
   }
 }

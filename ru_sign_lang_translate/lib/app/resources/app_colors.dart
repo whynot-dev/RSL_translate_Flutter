@@ -70,6 +70,8 @@ class AppColors {
   static const Color red = Color(0xFFFF2F2F);
 
   static const Color blue = Color(0xFF007AFF);
+  static const blue1 = Color(0xFF0175FF);
+  static const blue2 = Color(0xFF0962CD);
 
   // static const Color startGradientBackground = Color(0x00343240);
   static const Color startGradientBackground = Color(0xFF343240);

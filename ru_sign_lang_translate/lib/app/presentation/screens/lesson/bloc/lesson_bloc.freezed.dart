@@ -22,6 +22,8 @@ mixin _$LessonState {
   CameraController? get cameraController => throw _privateConstructorUsedError;
   VideoPlayerController? get videoController =>
       throw _privateConstructorUsedError;
+  bool get isStartingPractice => throw _privateConstructorUsedError;
+  String? get prediction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LessonStateCopyWith<LessonState> get copyWith =>
@@ -39,7 +41,9 @@ abstract class $LessonStateCopyWith<$Res> {
       LessonEntity lesson,
       LessonType selectedLessonType,
       CameraController? cameraController,
-      VideoPlayerController? videoController});
+      VideoPlayerController? videoController,
+      bool isStartingPractice,
+      String? prediction});
 }
 
 /// @nodoc
@@ -60,6 +64,8 @@ class _$LessonStateCopyWithImpl<$Res, $Val extends LessonState>
     Object? selectedLessonType = null,
     Object? cameraController = freezed,
     Object? videoController = freezed,
+    Object? isStartingPractice = null,
+    Object? prediction = freezed,
   }) {
     return _then(_value.copyWith(
       action: freezed == action
@@ -82,6 +88,14 @@ class _$LessonStateCopyWithImpl<$Res, $Val extends LessonState>
           ? _value.videoController
           : videoController // ignore: cast_nullable_to_non_nullable
               as VideoPlayerController?,
+      isStartingPractice: null == isStartingPractice
+          ? _value.isStartingPractice
+          : isStartingPractice // ignore: cast_nullable_to_non_nullable
+              as bool,
+      prediction: freezed == prediction
+          ? _value.prediction
+          : prediction // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -99,7 +113,9 @@ abstract class _$$LessonStateImplCopyWith<$Res>
       LessonEntity lesson,
       LessonType selectedLessonType,
       CameraController? cameraController,
-      VideoPlayerController? videoController});
+      VideoPlayerController? videoController,
+      bool isStartingPractice,
+      String? prediction});
 }
 
 /// @nodoc
@@ -118,6 +134,8 @@ class __$$LessonStateImplCopyWithImpl<$Res>
     Object? selectedLessonType = null,
     Object? cameraController = freezed,
     Object? videoController = freezed,
+    Object? isStartingPractice = null,
+    Object? prediction = freezed,
   }) {
     return _then(_$LessonStateImpl(
       action: freezed == action
@@ -140,6 +158,14 @@ class __$$LessonStateImplCopyWithImpl<$Res>
           ? _value.videoController
           : videoController // ignore: cast_nullable_to_non_nullable
               as VideoPlayerController?,
+      isStartingPractice: null == isStartingPractice
+          ? _value.isStartingPractice
+          : isStartingPractice // ignore: cast_nullable_to_non_nullable
+              as bool,
+      prediction: freezed == prediction
+          ? _value.prediction
+          : prediction // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -152,7 +178,9 @@ class _$LessonStateImpl with DiagnosticableTreeMixin implements _LessonState {
       required this.lesson,
       this.selectedLessonType = LessonType.theory,
       this.cameraController,
-      this.videoController});
+      this.videoController,
+      this.isStartingPractice = false,
+      this.prediction});
 
   @override
   final BlocAction? action;
@@ -165,10 +193,15 @@ class _$LessonStateImpl with DiagnosticableTreeMixin implements _LessonState {
   final CameraController? cameraController;
   @override
   final VideoPlayerController? videoController;
+  @override
+  @JsonKey()
+  final bool isStartingPractice;
+  @override
+  final String? prediction;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LessonState(action: $action, lesson: $lesson, selectedLessonType: $selectedLessonType, cameraController: $cameraController, videoController: $videoController)';
+    return 'LessonState(action: $action, lesson: $lesson, selectedLessonType: $selectedLessonType, cameraController: $cameraController, videoController: $videoController, isStartingPractice: $isStartingPractice, prediction: $prediction)';
   }
 
   @override
@@ -180,7 +213,9 @@ class _$LessonStateImpl with DiagnosticableTreeMixin implements _LessonState {
       ..add(DiagnosticsProperty('lesson', lesson))
       ..add(DiagnosticsProperty('selectedLessonType', selectedLessonType))
       ..add(DiagnosticsProperty('cameraController', cameraController))
-      ..add(DiagnosticsProperty('videoController', videoController));
+      ..add(DiagnosticsProperty('videoController', videoController))
+      ..add(DiagnosticsProperty('isStartingPractice', isStartingPractice))
+      ..add(DiagnosticsProperty('prediction', prediction));
   }
 
   @override
@@ -195,12 +230,23 @@ class _$LessonStateImpl with DiagnosticableTreeMixin implements _LessonState {
             (identical(other.cameraController, cameraController) ||
                 other.cameraController == cameraController) &&
             (identical(other.videoController, videoController) ||
-                other.videoController == videoController));
+                other.videoController == videoController) &&
+            (identical(other.isStartingPractice, isStartingPractice) ||
+                other.isStartingPractice == isStartingPractice) &&
+            (identical(other.prediction, prediction) ||
+                other.prediction == prediction));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, action, lesson,
-      selectedLessonType, cameraController, videoController);
+  int get hashCode => Object.hash(
+      runtimeType,
+      action,
+      lesson,
+      selectedLessonType,
+      cameraController,
+      videoController,
+      isStartingPractice,
+      prediction);
 
   @JsonKey(ignore: true)
   @override
@@ -215,7 +261,9 @@ abstract class _LessonState implements LessonState {
       required final LessonEntity lesson,
       final LessonType selectedLessonType,
       final CameraController? cameraController,
-      final VideoPlayerController? videoController}) = _$LessonStateImpl;
+      final VideoPlayerController? videoController,
+      final bool isStartingPractice,
+      final String? prediction}) = _$LessonStateImpl;
 
   @override
   BlocAction? get action;
@@ -227,6 +275,10 @@ abstract class _LessonState implements LessonState {
   CameraController? get cameraController;
   @override
   VideoPlayerController? get videoController;
+  @override
+  bool get isStartingPractice;
+  @override
+  String? get prediction;
   @override
   @JsonKey(ignore: true)
   _$$LessonStateImplCopyWith<_$LessonStateImpl> get copyWith =>
@@ -241,6 +293,9 @@ mixin _$LessonEvent {
     required TResult Function() backClicked,
     required TResult Function(LessonType lessonType) lessonTypeChanged,
     required TResult Function() switchCameraClicked,
+    required TResult Function() startClicked,
+    required TResult Function() stopClicked,
+    required TResult Function(String gesture) gestureRecognized,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -249,6 +304,9 @@ mixin _$LessonEvent {
     TResult? Function()? backClicked,
     TResult? Function(LessonType lessonType)? lessonTypeChanged,
     TResult? Function()? switchCameraClicked,
+    TResult? Function()? startClicked,
+    TResult? Function()? stopClicked,
+    TResult? Function(String gesture)? gestureRecognized,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -257,6 +315,9 @@ mixin _$LessonEvent {
     TResult Function()? backClicked,
     TResult Function(LessonType lessonType)? lessonTypeChanged,
     TResult Function()? switchCameraClicked,
+    TResult Function()? startClicked,
+    TResult Function()? stopClicked,
+    TResult Function(String gesture)? gestureRecognized,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -266,6 +327,9 @@ mixin _$LessonEvent {
     required TResult Function(BackClicked value) backClicked,
     required TResult Function(LessonTypeChanged value) lessonTypeChanged,
     required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(StartClicked value) startClicked,
+    required TResult Function(StopClicked value) stopClicked,
+    required TResult Function(GestureRecognized value) gestureRecognized,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -274,6 +338,9 @@ mixin _$LessonEvent {
     TResult? Function(BackClicked value)? backClicked,
     TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
     TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(StartClicked value)? startClicked,
+    TResult? Function(StopClicked value)? stopClicked,
+    TResult? Function(GestureRecognized value)? gestureRecognized,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -282,6 +349,9 @@ mixin _$LessonEvent {
     TResult Function(BackClicked value)? backClicked,
     TResult Function(LessonTypeChanged value)? lessonTypeChanged,
     TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(StartClicked value)? startClicked,
+    TResult Function(StopClicked value)? stopClicked,
+    TResult Function(GestureRecognized value)? gestureRecognized,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -352,6 +422,9 @@ class _$InitImpl with DiagnosticableTreeMixin implements Init {
     required TResult Function() backClicked,
     required TResult Function(LessonType lessonType) lessonTypeChanged,
     required TResult Function() switchCameraClicked,
+    required TResult Function() startClicked,
+    required TResult Function() stopClicked,
+    required TResult Function(String gesture) gestureRecognized,
   }) {
     return init();
   }
@@ -363,6 +436,9 @@ class _$InitImpl with DiagnosticableTreeMixin implements Init {
     TResult? Function()? backClicked,
     TResult? Function(LessonType lessonType)? lessonTypeChanged,
     TResult? Function()? switchCameraClicked,
+    TResult? Function()? startClicked,
+    TResult? Function()? stopClicked,
+    TResult? Function(String gesture)? gestureRecognized,
   }) {
     return init?.call();
   }
@@ -374,6 +450,9 @@ class _$InitImpl with DiagnosticableTreeMixin implements Init {
     TResult Function()? backClicked,
     TResult Function(LessonType lessonType)? lessonTypeChanged,
     TResult Function()? switchCameraClicked,
+    TResult Function()? startClicked,
+    TResult Function()? stopClicked,
+    TResult Function(String gesture)? gestureRecognized,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -389,6 +468,9 @@ class _$InitImpl with DiagnosticableTreeMixin implements Init {
     required TResult Function(BackClicked value) backClicked,
     required TResult Function(LessonTypeChanged value) lessonTypeChanged,
     required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(StartClicked value) startClicked,
+    required TResult Function(StopClicked value) stopClicked,
+    required TResult Function(GestureRecognized value) gestureRecognized,
   }) {
     return init(this);
   }
@@ -400,6 +482,9 @@ class _$InitImpl with DiagnosticableTreeMixin implements Init {
     TResult? Function(BackClicked value)? backClicked,
     TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
     TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(StartClicked value)? startClicked,
+    TResult? Function(StopClicked value)? stopClicked,
+    TResult? Function(GestureRecognized value)? gestureRecognized,
   }) {
     return init?.call(this);
   }
@@ -411,6 +496,9 @@ class _$InitImpl with DiagnosticableTreeMixin implements Init {
     TResult Function(BackClicked value)? backClicked,
     TResult Function(LessonTypeChanged value)? lessonTypeChanged,
     TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(StartClicked value)? startClicked,
+    TResult Function(StopClicked value)? stopClicked,
+    TResult Function(GestureRecognized value)? gestureRecognized,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -472,6 +560,9 @@ class _$BackClickedImpl with DiagnosticableTreeMixin implements BackClicked {
     required TResult Function() backClicked,
     required TResult Function(LessonType lessonType) lessonTypeChanged,
     required TResult Function() switchCameraClicked,
+    required TResult Function() startClicked,
+    required TResult Function() stopClicked,
+    required TResult Function(String gesture) gestureRecognized,
   }) {
     return backClicked();
   }
@@ -483,6 +574,9 @@ class _$BackClickedImpl with DiagnosticableTreeMixin implements BackClicked {
     TResult? Function()? backClicked,
     TResult? Function(LessonType lessonType)? lessonTypeChanged,
     TResult? Function()? switchCameraClicked,
+    TResult? Function()? startClicked,
+    TResult? Function()? stopClicked,
+    TResult? Function(String gesture)? gestureRecognized,
   }) {
     return backClicked?.call();
   }
@@ -494,6 +588,9 @@ class _$BackClickedImpl with DiagnosticableTreeMixin implements BackClicked {
     TResult Function()? backClicked,
     TResult Function(LessonType lessonType)? lessonTypeChanged,
     TResult Function()? switchCameraClicked,
+    TResult Function()? startClicked,
+    TResult Function()? stopClicked,
+    TResult Function(String gesture)? gestureRecognized,
     required TResult orElse(),
   }) {
     if (backClicked != null) {
@@ -509,6 +606,9 @@ class _$BackClickedImpl with DiagnosticableTreeMixin implements BackClicked {
     required TResult Function(BackClicked value) backClicked,
     required TResult Function(LessonTypeChanged value) lessonTypeChanged,
     required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(StartClicked value) startClicked,
+    required TResult Function(StopClicked value) stopClicked,
+    required TResult Function(GestureRecognized value) gestureRecognized,
   }) {
     return backClicked(this);
   }
@@ -520,6 +620,9 @@ class _$BackClickedImpl with DiagnosticableTreeMixin implements BackClicked {
     TResult? Function(BackClicked value)? backClicked,
     TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
     TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(StartClicked value)? startClicked,
+    TResult? Function(StopClicked value)? stopClicked,
+    TResult? Function(GestureRecognized value)? gestureRecognized,
   }) {
     return backClicked?.call(this);
   }
@@ -531,6 +634,9 @@ class _$BackClickedImpl with DiagnosticableTreeMixin implements BackClicked {
     TResult Function(BackClicked value)? backClicked,
     TResult Function(LessonTypeChanged value)? lessonTypeChanged,
     TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(StartClicked value)? startClicked,
+    TResult Function(StopClicked value)? stopClicked,
+    TResult Function(GestureRecognized value)? gestureRecognized,
     required TResult orElse(),
   }) {
     if (backClicked != null) {
@@ -624,6 +730,9 @@ class _$LessonTypeChangedImpl
     required TResult Function() backClicked,
     required TResult Function(LessonType lessonType) lessonTypeChanged,
     required TResult Function() switchCameraClicked,
+    required TResult Function() startClicked,
+    required TResult Function() stopClicked,
+    required TResult Function(String gesture) gestureRecognized,
   }) {
     return lessonTypeChanged(lessonType);
   }
@@ -635,6 +744,9 @@ class _$LessonTypeChangedImpl
     TResult? Function()? backClicked,
     TResult? Function(LessonType lessonType)? lessonTypeChanged,
     TResult? Function()? switchCameraClicked,
+    TResult? Function()? startClicked,
+    TResult? Function()? stopClicked,
+    TResult? Function(String gesture)? gestureRecognized,
   }) {
     return lessonTypeChanged?.call(lessonType);
   }
@@ -646,6 +758,9 @@ class _$LessonTypeChangedImpl
     TResult Function()? backClicked,
     TResult Function(LessonType lessonType)? lessonTypeChanged,
     TResult Function()? switchCameraClicked,
+    TResult Function()? startClicked,
+    TResult Function()? stopClicked,
+    TResult Function(String gesture)? gestureRecognized,
     required TResult orElse(),
   }) {
     if (lessonTypeChanged != null) {
@@ -661,6 +776,9 @@ class _$LessonTypeChangedImpl
     required TResult Function(BackClicked value) backClicked,
     required TResult Function(LessonTypeChanged value) lessonTypeChanged,
     required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(StartClicked value) startClicked,
+    required TResult Function(StopClicked value) stopClicked,
+    required TResult Function(GestureRecognized value) gestureRecognized,
   }) {
     return lessonTypeChanged(this);
   }
@@ -672,6 +790,9 @@ class _$LessonTypeChangedImpl
     TResult? Function(BackClicked value)? backClicked,
     TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
     TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(StartClicked value)? startClicked,
+    TResult? Function(StopClicked value)? stopClicked,
+    TResult? Function(GestureRecognized value)? gestureRecognized,
   }) {
     return lessonTypeChanged?.call(this);
   }
@@ -683,6 +804,9 @@ class _$LessonTypeChangedImpl
     TResult Function(BackClicked value)? backClicked,
     TResult Function(LessonTypeChanged value)? lessonTypeChanged,
     TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(StartClicked value)? startClicked,
+    TResult Function(StopClicked value)? stopClicked,
+    TResult Function(GestureRecognized value)? gestureRecognized,
     required TResult orElse(),
   }) {
     if (lessonTypeChanged != null) {
@@ -754,6 +878,9 @@ class _$SwitchCameraClickedImpl
     required TResult Function() backClicked,
     required TResult Function(LessonType lessonType) lessonTypeChanged,
     required TResult Function() switchCameraClicked,
+    required TResult Function() startClicked,
+    required TResult Function() stopClicked,
+    required TResult Function(String gesture) gestureRecognized,
   }) {
     return switchCameraClicked();
   }
@@ -765,6 +892,9 @@ class _$SwitchCameraClickedImpl
     TResult? Function()? backClicked,
     TResult? Function(LessonType lessonType)? lessonTypeChanged,
     TResult? Function()? switchCameraClicked,
+    TResult? Function()? startClicked,
+    TResult? Function()? stopClicked,
+    TResult? Function(String gesture)? gestureRecognized,
   }) {
     return switchCameraClicked?.call();
   }
@@ -776,6 +906,9 @@ class _$SwitchCameraClickedImpl
     TResult Function()? backClicked,
     TResult Function(LessonType lessonType)? lessonTypeChanged,
     TResult Function()? switchCameraClicked,
+    TResult Function()? startClicked,
+    TResult Function()? stopClicked,
+    TResult Function(String gesture)? gestureRecognized,
     required TResult orElse(),
   }) {
     if (switchCameraClicked != null) {
@@ -791,6 +924,9 @@ class _$SwitchCameraClickedImpl
     required TResult Function(BackClicked value) backClicked,
     required TResult Function(LessonTypeChanged value) lessonTypeChanged,
     required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(StartClicked value) startClicked,
+    required TResult Function(StopClicked value) stopClicked,
+    required TResult Function(GestureRecognized value) gestureRecognized,
   }) {
     return switchCameraClicked(this);
   }
@@ -802,6 +938,9 @@ class _$SwitchCameraClickedImpl
     TResult? Function(BackClicked value)? backClicked,
     TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
     TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(StartClicked value)? startClicked,
+    TResult? Function(StopClicked value)? stopClicked,
+    TResult? Function(GestureRecognized value)? gestureRecognized,
   }) {
     return switchCameraClicked?.call(this);
   }
@@ -813,6 +952,9 @@ class _$SwitchCameraClickedImpl
     TResult Function(BackClicked value)? backClicked,
     TResult Function(LessonTypeChanged value)? lessonTypeChanged,
     TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(StartClicked value)? startClicked,
+    TResult Function(StopClicked value)? stopClicked,
+    TResult Function(GestureRecognized value)? gestureRecognized,
     required TResult orElse(),
   }) {
     if (switchCameraClicked != null) {
@@ -824,4 +966,455 @@ class _$SwitchCameraClickedImpl
 
 abstract class SwitchCameraClicked implements LessonEvent {
   const factory SwitchCameraClicked() = _$SwitchCameraClickedImpl;
+}
+
+/// @nodoc
+abstract class _$$StartClickedImplCopyWith<$Res> {
+  factory _$$StartClickedImplCopyWith(
+          _$StartClickedImpl value, $Res Function(_$StartClickedImpl) then) =
+      __$$StartClickedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$StartClickedImplCopyWithImpl<$Res>
+    extends _$LessonEventCopyWithImpl<$Res, _$StartClickedImpl>
+    implements _$$StartClickedImplCopyWith<$Res> {
+  __$$StartClickedImplCopyWithImpl(
+      _$StartClickedImpl _value, $Res Function(_$StartClickedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$StartClickedImpl with DiagnosticableTreeMixin implements StartClicked {
+  const _$StartClickedImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'LessonEvent.startClicked()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'LessonEvent.startClicked'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$StartClickedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() backClicked,
+    required TResult Function(LessonType lessonType) lessonTypeChanged,
+    required TResult Function() switchCameraClicked,
+    required TResult Function() startClicked,
+    required TResult Function() stopClicked,
+    required TResult Function(String gesture) gestureRecognized,
+  }) {
+    return startClicked();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? backClicked,
+    TResult? Function(LessonType lessonType)? lessonTypeChanged,
+    TResult? Function()? switchCameraClicked,
+    TResult? Function()? startClicked,
+    TResult? Function()? stopClicked,
+    TResult? Function(String gesture)? gestureRecognized,
+  }) {
+    return startClicked?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? backClicked,
+    TResult Function(LessonType lessonType)? lessonTypeChanged,
+    TResult Function()? switchCameraClicked,
+    TResult Function()? startClicked,
+    TResult Function()? stopClicked,
+    TResult Function(String gesture)? gestureRecognized,
+    required TResult orElse(),
+  }) {
+    if (startClicked != null) {
+      return startClicked();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(LessonTypeChanged value) lessonTypeChanged,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(StartClicked value) startClicked,
+    required TResult Function(StopClicked value) stopClicked,
+    required TResult Function(GestureRecognized value) gestureRecognized,
+  }) {
+    return startClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(StartClicked value)? startClicked,
+    TResult? Function(StopClicked value)? stopClicked,
+    TResult? Function(GestureRecognized value)? gestureRecognized,
+  }) {
+    return startClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(StartClicked value)? startClicked,
+    TResult Function(StopClicked value)? stopClicked,
+    TResult Function(GestureRecognized value)? gestureRecognized,
+    required TResult orElse(),
+  }) {
+    if (startClicked != null) {
+      return startClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class StartClicked implements LessonEvent {
+  const factory StartClicked() = _$StartClickedImpl;
+}
+
+/// @nodoc
+abstract class _$$StopClickedImplCopyWith<$Res> {
+  factory _$$StopClickedImplCopyWith(
+          _$StopClickedImpl value, $Res Function(_$StopClickedImpl) then) =
+      __$$StopClickedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$StopClickedImplCopyWithImpl<$Res>
+    extends _$LessonEventCopyWithImpl<$Res, _$StopClickedImpl>
+    implements _$$StopClickedImplCopyWith<$Res> {
+  __$$StopClickedImplCopyWithImpl(
+      _$StopClickedImpl _value, $Res Function(_$StopClickedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$StopClickedImpl with DiagnosticableTreeMixin implements StopClicked {
+  const _$StopClickedImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'LessonEvent.stopClicked()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'LessonEvent.stopClicked'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$StopClickedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() backClicked,
+    required TResult Function(LessonType lessonType) lessonTypeChanged,
+    required TResult Function() switchCameraClicked,
+    required TResult Function() startClicked,
+    required TResult Function() stopClicked,
+    required TResult Function(String gesture) gestureRecognized,
+  }) {
+    return stopClicked();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? backClicked,
+    TResult? Function(LessonType lessonType)? lessonTypeChanged,
+    TResult? Function()? switchCameraClicked,
+    TResult? Function()? startClicked,
+    TResult? Function()? stopClicked,
+    TResult? Function(String gesture)? gestureRecognized,
+  }) {
+    return stopClicked?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? backClicked,
+    TResult Function(LessonType lessonType)? lessonTypeChanged,
+    TResult Function()? switchCameraClicked,
+    TResult Function()? startClicked,
+    TResult Function()? stopClicked,
+    TResult Function(String gesture)? gestureRecognized,
+    required TResult orElse(),
+  }) {
+    if (stopClicked != null) {
+      return stopClicked();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(LessonTypeChanged value) lessonTypeChanged,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(StartClicked value) startClicked,
+    required TResult Function(StopClicked value) stopClicked,
+    required TResult Function(GestureRecognized value) gestureRecognized,
+  }) {
+    return stopClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(StartClicked value)? startClicked,
+    TResult? Function(StopClicked value)? stopClicked,
+    TResult? Function(GestureRecognized value)? gestureRecognized,
+  }) {
+    return stopClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(StartClicked value)? startClicked,
+    TResult Function(StopClicked value)? stopClicked,
+    TResult Function(GestureRecognized value)? gestureRecognized,
+    required TResult orElse(),
+  }) {
+    if (stopClicked != null) {
+      return stopClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class StopClicked implements LessonEvent {
+  const factory StopClicked() = _$StopClickedImpl;
+}
+
+/// @nodoc
+abstract class _$$GestureRecognizedImplCopyWith<$Res> {
+  factory _$$GestureRecognizedImplCopyWith(_$GestureRecognizedImpl value,
+          $Res Function(_$GestureRecognizedImpl) then) =
+      __$$GestureRecognizedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String gesture});
+}
+
+/// @nodoc
+class __$$GestureRecognizedImplCopyWithImpl<$Res>
+    extends _$LessonEventCopyWithImpl<$Res, _$GestureRecognizedImpl>
+    implements _$$GestureRecognizedImplCopyWith<$Res> {
+  __$$GestureRecognizedImplCopyWithImpl(_$GestureRecognizedImpl _value,
+      $Res Function(_$GestureRecognizedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? gesture = null,
+  }) {
+    return _then(_$GestureRecognizedImpl(
+      null == gesture
+          ? _value.gesture
+          : gesture // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GestureRecognizedImpl
+    with DiagnosticableTreeMixin
+    implements GestureRecognized {
+  const _$GestureRecognizedImpl(this.gesture);
+
+  @override
+  final String gesture;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'LessonEvent.gestureRecognized(gesture: $gesture)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'LessonEvent.gestureRecognized'))
+      ..add(DiagnosticsProperty('gesture', gesture));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GestureRecognizedImpl &&
+            (identical(other.gesture, gesture) || other.gesture == gesture));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, gesture);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GestureRecognizedImplCopyWith<_$GestureRecognizedImpl> get copyWith =>
+      __$$GestureRecognizedImplCopyWithImpl<_$GestureRecognizedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() backClicked,
+    required TResult Function(LessonType lessonType) lessonTypeChanged,
+    required TResult Function() switchCameraClicked,
+    required TResult Function() startClicked,
+    required TResult Function() stopClicked,
+    required TResult Function(String gesture) gestureRecognized,
+  }) {
+    return gestureRecognized(gesture);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? backClicked,
+    TResult? Function(LessonType lessonType)? lessonTypeChanged,
+    TResult? Function()? switchCameraClicked,
+    TResult? Function()? startClicked,
+    TResult? Function()? stopClicked,
+    TResult? Function(String gesture)? gestureRecognized,
+  }) {
+    return gestureRecognized?.call(gesture);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? backClicked,
+    TResult Function(LessonType lessonType)? lessonTypeChanged,
+    TResult Function()? switchCameraClicked,
+    TResult Function()? startClicked,
+    TResult Function()? stopClicked,
+    TResult Function(String gesture)? gestureRecognized,
+    required TResult orElse(),
+  }) {
+    if (gestureRecognized != null) {
+      return gestureRecognized(gesture);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(LessonTypeChanged value) lessonTypeChanged,
+    required TResult Function(SwitchCameraClicked value) switchCameraClicked,
+    required TResult Function(StartClicked value) startClicked,
+    required TResult Function(StopClicked value) stopClicked,
+    required TResult Function(GestureRecognized value) gestureRecognized,
+  }) {
+    return gestureRecognized(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult? Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult? Function(StartClicked value)? startClicked,
+    TResult? Function(StopClicked value)? stopClicked,
+    TResult? Function(GestureRecognized value)? gestureRecognized,
+  }) {
+    return gestureRecognized?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(LessonTypeChanged value)? lessonTypeChanged,
+    TResult Function(SwitchCameraClicked value)? switchCameraClicked,
+    TResult Function(StartClicked value)? startClicked,
+    TResult Function(StopClicked value)? stopClicked,
+    TResult Function(GestureRecognized value)? gestureRecognized,
+    required TResult orElse(),
+  }) {
+    if (gestureRecognized != null) {
+      return gestureRecognized(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GestureRecognized implements LessonEvent {
+  const factory GestureRecognized(final String gesture) =
+      _$GestureRecognizedImpl;
+
+  String get gesture;
+  @JsonKey(ignore: true)
+  _$$GestureRecognizedImplCopyWith<_$GestureRecognizedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
