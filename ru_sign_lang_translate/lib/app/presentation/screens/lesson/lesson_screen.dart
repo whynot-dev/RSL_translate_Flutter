@@ -11,6 +11,7 @@ import 'package:ru_sign_lang_translate/app/widgets/selectors/switcher_widget.dar
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_listener.dart';
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_state_widget.dart';
 import 'package:ru_sign_lang_translate/domain/enums/lesson_type.dart';
+import 'package:ru_sign_lang_translate/localization/app_localizations.dart';
 import 'package:video_player/video_player.dart';
 
 import 'bloc/lesson_bloc.dart';
@@ -210,7 +211,7 @@ class _LessonScreenState extends BaseBlocStateWidget<LessonScreen, LessonBloc, L
         builder: (context, state) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: DefaultButton(
-            text: 'Начать',
+            text: AppLocalizations.of(context).start,
             enabled: !state.isStartingPractice,
             onPressed: () {
               getBloc().add(LessonEvent.startClicked());
@@ -224,7 +225,7 @@ class _LessonScreenState extends BaseBlocStateWidget<LessonScreen, LessonBloc, L
     builder: (context, state) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: DefaultButton(
-        text: 'Стоп',
+        text: AppLocalizations.of(context).stop,
         color: AppColors.red,
         enabled: state.isStartingPractice,
         onPressed: () {

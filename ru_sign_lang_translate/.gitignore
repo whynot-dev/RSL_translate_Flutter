@@ -30,8 +30,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-/assets/models
-/assets/labels
+/assets/
 
 # Symbolication related
 app.*.symbols

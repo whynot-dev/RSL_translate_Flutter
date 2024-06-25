@@ -12,6 +12,7 @@ import 'package:ru_sign_lang_translate/app/widgets/routes/default_page_route_wit
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_listener.dart';
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_stateless_widget.dart';
 import 'package:ru_sign_lang_translate/gen/assets.gen.dart';
+import 'package:ru_sign_lang_translate/localization/app_localizations.dart';
 
 import 'bloc/main_screen_bloc.dart';
 
@@ -99,20 +100,15 @@ class MainScreenScreen extends BaseBlocStatelessWidget<MainScreenBloc, MainScree
 
   Widget _buildTranslateButton(BuildContext context) => DefaultButton(
         color: AppColors.white4,
-        text: 'Переводчик',
+        text: AppLocalizations.of(context).translator,
         onPressed: () {
           getBloc(context).add(MainScreenEvent.translateClicked());
         },
       );
 
-  Widget _buildMicrophoneButton() => DefaultButton(
-        text: 'Голос в текст',
-        onPressed: () {},
-      );
-
   Widget _buildEducationButton(BuildContext context) => DefaultButton(
         color: AppColors.white4,
-        text: 'Обучение',
+        text:  AppLocalizations.of(context).education,
         onPressed: () {
           getBloc(context).add(MainScreenEvent.educationClicked());
         },

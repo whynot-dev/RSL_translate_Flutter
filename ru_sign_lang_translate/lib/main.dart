@@ -18,10 +18,4 @@ void main() async {
   await setUpLocator();
 
   runApp(App());
-
-  // runZonedGuarded(() {
-  //
-  // }, (error, stackTrace) {
-  //   print('runZonedGuarded: Caught error in my root zone.\n $error $stackTrace');
-  // });
 }

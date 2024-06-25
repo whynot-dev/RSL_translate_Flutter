@@ -188,31 +188,4 @@ class TranslatorBloc extends Bloc<TranslatorEvent, TranslatorState> {
     });
     return _cameraController;
   }
-
-// Future<String?> _predict(Map<String, OrtValueTensor> inputs) async {
-//   //final outputs = await _session.runAsync(_runOptions, inputs);
-//   final outputs = await _session.run(_runOptions, inputs);
-//   OrtValue? value = outputs?.first;
-//
-//   List<List<double>>? predictionValue = value!.value as List<List<double>>?;
-//   Float32List prediction = Float32List.fromList(predictionValue!.first);
-//   // outputs?.first?.release();
-//   List<double> softmaxPrediction = softmax(prediction);
-//
-//   // Find the top-K predictions
-//   List<int> topkLabels = topkIndices(softmaxPrediction, topk);
-//   List<double> topkConfidence = topkLabels.map((idx) => softmaxPrediction[idx]).toList();
-//
-//   // Get the corresponding labels for the top-K predictions
-//   List<String> resultLabels = topkLabels.map((idx) => _labels[idx]!).toList();
-//
-//   print('${topkConfidence}:${resultLabels.first}');
-//
-//   if ((topkConfidence.maxOrNull ?? 0) < threshold) {
-//     return null;
-//   } else {
-//     print('${resultLabels} + !!!!!!!!!');
-//     return resultLabels.first;
-//   }
-// }
 }

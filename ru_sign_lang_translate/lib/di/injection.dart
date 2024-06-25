@@ -25,11 +25,4 @@ Future setUpLocatorWithDependencies({
   required GlobalKey<NavigatorState> navigatorKey,
 }) async {
   injection.registerSingleton<AppLocalizations>(AppLocalizations.of(context));
-  injection.registerSingleton<InternetConnectionChecker>(InternetConnectionChecker());
-  injection.registerSingleton<NetworkInfo>(NetworkInfoImpl(injection()));
-
-  injection.registerSingleton<Dio>(DioHelper.getDio(
-    preferencesLocalGateway: injection(),
-    navigatorKey: navigatorKey,
-  ));
 }

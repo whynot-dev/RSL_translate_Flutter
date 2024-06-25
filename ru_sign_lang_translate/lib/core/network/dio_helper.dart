@@ -11,7 +11,7 @@ class DioHelper {
     return 'https://$_domain/api/';
   }
 
-  static const defaultDomain = 'core.justdoluck.ru';
+  static const defaultDomain = 'core.------.ru';
   static Duration timeout = Duration(milliseconds: 30000);
 
   static Dio getAuthDio() {

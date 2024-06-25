@@ -6,12 +6,12 @@ import 'package:ru_sign_lang_translate/app/presentation/screens/lesson/bloc/less
 import 'package:ru_sign_lang_translate/app/presentation/screens/lesson/lesson_screen.dart';
 import 'package:ru_sign_lang_translate/app/resources/app_colors.dart';
 import 'package:ru_sign_lang_translate/app/widgets/app_bars/default_appbar.dart';
-import 'package:ru_sign_lang_translate/app/widgets/backgrounds/default_white_background.dart';
 import 'package:ru_sign_lang_translate/app/widgets/lists/lesson_item.dart';
 import 'package:ru_sign_lang_translate/app/widgets/routes/default_page_route_without_animation.dart';
 import 'package:ru_sign_lang_translate/core/ui/scroll_behavior/disable_glow_effect_scroll_behavior.dart';
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_listener.dart';
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_state_widget.dart';
+import 'package:ru_sign_lang_translate/localization/app_localizations.dart';
 
 import 'bloc/education_bloc.dart';
 
@@ -59,7 +59,7 @@ class _EducationScreenState extends BaseBlocStateWidget<EducationScreen, Educati
       );
 
   Widget _buildAppBar() => DefaultAppbar(
-        title: 'Обучение',
+        title: AppLocalizations.of(context).education,
         needDivider: true,
         onBackPressed: () {
           getBloc().add(EducationEvent.backClicked());
@@ -72,7 +72,7 @@ class _EducationScreenState extends BaseBlocStateWidget<EducationScreen, Educati
           padding: const EdgeInsets.all(16),
           itemCount: state.lessons.length,
           itemBuilder: (context, index) => LessonItem(
-            title: 'Урок ${index + 1}',
+            title: '${AppLocalizations.of(context).lesson} ${index + 1}',
             lesson: state.lessons[index],
             lessonClicked: () {
               getBloc().add(EducationEvent.lessonClicked(state.lessons[index]));

@@ -7,13 +7,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ru_sign_lang_translate/app/navigation/navigation_action.dart';
 import 'package:ru_sign_lang_translate/app/resources/app_colors.dart';
 import 'package:ru_sign_lang_translate/app/widgets/app_bars/default_appbar.dart';
-import 'package:ru_sign_lang_translate/app/widgets/backgrounds/default_black_background.dart';
-import 'package:ru_sign_lang_translate/app/widgets/backgrounds/default_white_background.dart';
 import 'package:ru_sign_lang_translate/app/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:ru_sign_lang_translate/app/widgets/buttons/app_button.dart';
 import 'package:ru_sign_lang_translate/app/widgets/buttons/default_button.dart';
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_listener.dart';
 import 'package:ru_sign_lang_translate/core/ui/widgets/base_bloc_state_widget.dart';
+import 'package:ru_sign_lang_translate/localization/app_localizations.dart';
 
 import 'bloc/translator_bloc.dart';
 
@@ -76,37 +74,13 @@ class _TranslatorScreenState extends BaseBlocStateWidget<TranslatorScreen, Trans
                 ),
               ),
               DefaultAppbar(
-                title: 'Переводчик',
+                title: AppLocalizations.of(context).translator,
                 rightWidget: _buildCameraSwitchButton(context),
                 onBackPressed: () {
                   getBloc().add(TranslatorEvent.backClicked());
                 },
               ),
             ],
-          ),
-        ),
-      );
-
-  Widget _buildCurrentPredict() => BlocBuilder<TranslatorBloc, TranslatorState>(
-        buildWhen: (previous, current) => previous.currentGesture != current.currentGesture,
-        builder: (context, state) => Container(
-          padding: EdgeInsets.symmetric(horizontal: 55),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'Текущий жест: ${state.currentGesture ?? ''}',
-            style: TextStyle(fontSize: 16, color: AppColors.black),
-          ),
-        ),
-      );
-
-  Widget _buildOldPredictions() => BlocBuilder<TranslatorBloc, TranslatorState>(
-        buildWhen: (previous, current) => previous.gestures != current.gestures,
-        builder: (context, state) => Container(
-          padding: const EdgeInsets.symmetric(horizontal: 55),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'последние 5 жестов: ${state.gestures}',
-            style: TextStyle(fontSize: 16, color: AppColors.black),
           ),
         ),
       );
@@ -142,7 +116,7 @@ class _TranslatorScreenState extends BaseBlocStateWidget<TranslatorScreen, Trans
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'Текущий жест',
+              AppLocalizations.of(context).currentGesture,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 18,
@@ -184,7 +158,7 @@ class _TranslatorScreenState extends BaseBlocStateWidget<TranslatorScreen, Trans
   Widget _buildLastPredictionsButton() => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: DefaultButton(
-          text: 'Последние 5 жестов',
+          text: AppLocalizations.of(context).lastFiveGestures,
           onPressed: () {
             getBloc().add(TranslatorEvent.showLastPredictionsClicked());
           },
@@ -210,7 +184,7 @@ class _TranslatorScreenState extends BaseBlocStateWidget<TranslatorScreen, Trans
             ),
             const SizedBox(height: 12),
             Text(
-              'Последние 5 жестов',
+              AppLocalizations.of(context).lastFiveGestures,
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 20,
